@@ -230,20 +230,20 @@ public class Main {
     }
 
     public static void initCluster(double[][] mat, double[][] croyance) {
-        averageDistanceBelieves(mat);
-        int nbCroyance = croyance[0].length;
-        int nbAgents = mat.length;
-        int[] agentInCluster = new int[nbAgents];
-
-        List<Integer>[] cluster = new List[nbCroyance];
-        for (int i = 0; i < nbCroyance; i++) {
-            cluster[i] = new ArrayList<>();
-        }
-
-        for (int i = 0; i < nbAgents; i++) {
-            agentInCluster[i] = i;
-        }
-
+//        averageDistanceBelieves(mat);
+//        minMaxAgentsBelieves(mat);
+//        int nbCroyance = croyance[0].length;
+//        int nbAgents = mat.length;
+//        int[] agentInCluster = new int[nbAgents];
+//
+//        List<Integer>[] cluster = new List[nbCroyance];
+//        for (int i = 0; i < nbCroyance; i++) {
+//            cluster[i] = new ArrayList<>();
+//        }
+//
+//        for (int i = 0; i < nbAgents; i++) {
+//            agentInCluster[i] = i;
+//        }
 //        cluster[0].add(agent1max);
 //        clusterList.add(0, cluster[0]);
 //        agentInCluster[0]=0;
@@ -267,13 +267,43 @@ public class Main {
 //            clusterList.add(1, cluster[1]);
 //        }
 //        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
+
         miseAJourCluster(mat, croyance);
+
     }
 
-    public static void miseAJourCluster(double[][] mat, double[][] croyance) {
+    public static double[][] supprimerIndiceMat(double[][] tableau, int index) {
+        int nRows = tableau.length;
+        int nColumns = tableau[0].length;
 
+        if (index >= nRows || index >= nColumns) {
+            // Return exception ?
+            return new double[0][0];
+        }
+
+        double[][] newTab = new double[nRows - 1][nColumns - 1];
+        int newTabRow = 0;
+        int newTabCol = 0;
+
+        for (int i = 0; i < nRows; ++i) {
+            if (i != index) {
+                for (int j = 0; j < nColumns; ++j) {
+                    if (j != index) {
+                        newTab[newTabRow][newTabCol] = tableau[i][j];
+                        ++newTabCol;
+                    }
+                }
+                ++newTabRow;
+                newTabCol = 0;
+            }
+        }
+        return newTab;
+    }
+
+    public static void miseAJourCluster(double[][] matx, double[][] croyance) {
+
+        int nbAgent = matx[0].length;
         int nbCroyance = croyance[0].length;
-        int nbAgents = mat.length;
         double max = Double.MIN_VALUE;
         double tempMax = 0;
         double min = Double.MAX_VALUE;
@@ -282,14 +312,15 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
+        double[][] mat = matx;
 
         List<Integer>[] cluster = new List[nbCroyance];
         for (int i = 0; i < nbCroyance; i++) {
             cluster[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < nbAgents; i++) {
-            for (int j = 0; j < nbAgents; j++) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[i].length; j++) {
 
                 if (i != j) {
                     tempMin = mat[i][j];
@@ -306,49 +337,68 @@ public class Main {
 
                     }
                 }
-
             }
-
         }
 
+//        supprimerIndiceMat(mat,agent1min);
         System.out.println("a_i_min : " + agent1min + " , a_j_min : " + agent2min + " , min = " + min + "; a_i_max : " + agent1max + " , a_j_max : " + agent2max + " , max = " + max);
 
         cluster[0].add(agent1max);
-        clusterList.add(0, cluster[0]);
-//        agentInCluster[0]=0;
+//        clusterList.add(0, cluster[0]);
         cluster[1].add(agent2max);
-        clusterList.add(1, cluster[1]);
-//        if (agent1max == agent1min) {
-//            cluster[0].add(agent2min);
-//            clusterList.add(0, cluster[0]);
-//        }
-//        if (agent2max == agent1min) {
-//            cluster[0].add(agent2min);
-//            clusterList.add(0, cluster[0]);
-//        }
-//        if (agent1max == agent2min) {
-//            cluster[1].add(agent1min);
-//            clusterList.add(1, cluster[1]);
-//        }
-//        if (agent2max == agent2min) {
-//            cluster[1].add(agent1min);
-//            clusterList.add(1, cluster[1]);
-//        }
-//        for (List<Integer> list : cluster) {
-//            for (int j = 0; j < list.size(); j++) {
-//                if (agent1min == list.get(j)) {
-//                    list.add(j, agent2min);
-//
-//                }
-//                if (agent2min == list.get(j)) {
-//                    list.add(j, agent1min);
-//
-//                }
-//
+//        clusterList.add(1, cluster[1]);
+        nbAgent -= 2;
+        if (agent1min == agent1max) {
+            cluster[0].add(agent2min);
+//            for (int i = 0; i < mat.length; i++) {
+//                mat[agent2min][i] = -1;
+//                mat[i][agent2min] = -1;
 //            }
+//            clusterList.add(0, cluster[0]);
+        }
+        if (agent2min == agent1max) {
+            cluster[0].add(agent1min);
+//            for (int i = 0; i < mat.length; i++) {
+//                mat[agent1min][i] = -1;
+//                mat[i][agent1min] = -1;
+//            }
+//            clusterList.add(0, cluster[0]);
+        }
+        if (agent1min == agent2max) {
+            cluster[1].add(agent2min);
+//            for (int i = 0; i < mat.length; i++) {
+//                mat[agent2min][i] = -1;
+//                mat[i][agent2min] = -1;
+//            }
+//            clusterList.add(1, cluster[1]);
+        }
+        if (agent2min == agent2max) {
+            cluster[1].add(agent1min);
+//            for (int i = 0; i < mat.length; i++) {
+//                mat[agent1min][i] = -1;
+//                mat[i][agent1min] = -1;
+//            }
+//            clusterList.add(1, cluster[1]);
+        }
+
+//        for (int i = 0; i < mat.length; i++) {
+//            mat[agent1max][i] = -1;
+//            mat[agent2max][i] = -1;
+//            mat[i][agent1max] = -1;
+//            mat[i][agent2max] = -1;
 //        }
 
-        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
+//        for (int i = 0; i < mat.length; i++) {
+//            System.out.println(Arrays.toString(mat[i]));
+//        }
+
+        System.out.println("");
+        System.out.println("Cluster :");
+        for (List<Integer> cluster1 : cluster) {
+            System.out.println(cluster1);
+
+        }
+//        System.out.println("Cluster : "+clusterList.get(1) + " " + clusterList.get(0));
 
     }
 
@@ -497,10 +547,10 @@ public class Main {
         System.out.println("");
         System.out.println(" Cluster Ba : ");
         initCluster(resBa2, listOfValue2);
-                System.out.println("");
+        System.out.println("");
         System.out.println(" Cluster He : ");
         initCluster(resHe2, listOfValue2);
-                System.out.println("");
+        System.out.println("");
         System.out.println(" Cluster Ku : ");
         initCluster(resK2, listOfValue2);
 
