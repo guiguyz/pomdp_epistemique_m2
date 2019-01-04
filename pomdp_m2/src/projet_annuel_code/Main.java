@@ -27,12 +27,12 @@ public class Main {
     static int agent2min;
     static List<List<Integer>> clusterList = new ArrayList<List<Integer>>();
 
-    static String[] listOfAgent1 = {"Agent1", "Agent2", "Agent3", "Agent4"};
+    static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
     static String[] listOfFeatures1 = {"Civile", "Militaire"};
     static double[][] listOfValue11 = {{0.6, 0.4}, {0.4, 0.6}, {0.85, 0.15}, {0.75, 0.25}};
     static double[][] listOfValue12 = {{0.6, 0.4}, {0.3, 0.7}, {0.95, 0.05}, {0.75, 0.25}};
 
-    static String[] listOfAgent2 = {"Agent1", "Agent2", "Agent3", "Agent4", "Agent5"};
+    static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
     static String[] listOfFeatures2 = {"Rouge", "Vert", "Bleu", "Blanc"};
     static double[][] listOfValue2 = {{0.5, 0.1, 0.3, 0.1}, {0.05, 0.5, 0.05, 0.4}, {0.1, 0.1, 0.5, 0.3}, {0.04, 0.01, 0.05, 0.95}, {0.1, 0.1, 0.1, 0.7}};
 
@@ -338,7 +338,7 @@ public class Main {
         System.out.println("Matrice de croyance :");
         System.out.println(Arrays.toString(listOfFeatures1));
         for (int i = 0; i < listOfValue11.length; i++) {
-            System.out.println("Agent" + String.valueOf(i + 1) + " " + Arrays.toString(listOfValue11[i]));
+            System.out.println("Agent" + String.valueOf(i) + " " + Arrays.toString(listOfValue11[i]));
         }
         System.out.println("");
         double resBa1[][] = matriceDistanceAgents(listOfValue11, "B");
@@ -397,7 +397,7 @@ public class Main {
         System.out.println("Matrice de croyance :");
         System.out.println(Arrays.toString(listOfFeatures2));
         for (int i = 0; i < listOfValue2.length; i++) {
-            System.out.println("Agent" + String.valueOf(i + 1) + " " + Arrays.toString(listOfValue2[i]));
+            System.out.println("Agent" + String.valueOf(i) + " " + Arrays.toString(listOfValue2[i]));
         }
         System.out.println("");
         double resBa2[][] = matriceDistanceAgents(listOfValue2, "B");
@@ -422,7 +422,7 @@ public class Main {
         }
         System.out.println("");
         System.out.println(" Cluster : ");
-        initCluster(resK2, listOfValue2);
+        initCluster(resBa2, listOfValue2);
         System.out.println(" max ");
         System.out.println(mapAgentsMax.entrySet());
         System.out.println(lemax + " " + agent1max + " " + agent2max);
