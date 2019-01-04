@@ -1,4 +1,4 @@
-# pomdp épistemique distibué
+# pomdp épistemique distribué
 
 Université de Caen Normandie
 UFR des Sciences
