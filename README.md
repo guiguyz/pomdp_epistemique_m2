@@ -1,6 +1,5 @@
-# pomdp_epistemique_m2
+# pomdp épistemique distribué
 
-1
 Université de Caen Normandie
 UFR des Sciences
 M2-INFO
