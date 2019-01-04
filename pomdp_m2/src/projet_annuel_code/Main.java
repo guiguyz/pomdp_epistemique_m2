@@ -30,7 +30,8 @@ public class Main {
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
     static String[] listOfFeatures1 = {"Civile", "Militaire"};
     static double[][] listOfValue11 = {{0.6, 0.4}, {0.4, 0.6}, {0.85, 0.15}, {0.75, 0.25}};
-    static double[][] listOfValue12 = {{0.6, 0.4}, {0.3, 0.7}, {0.95, 0.05}, {0.75, 0.25}};
+    static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};
+    static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.99, 0.01}};
 
     static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
     static String[] listOfFeatures2 = {"Rouge", "Vert", "Bleu", "Blanc"};
@@ -188,6 +189,18 @@ public class Main {
      *
      * @param mat
      */
+    public static void averageDistanceBelieves(double[][] mat) {
+        int nbAgent = mat.length;
+        for (int i = 0; i < nbAgent; i++) {
+            mapAgentsMax.put(i, getMax(mat[i], i));
+            mapAgentsMin.put(i, getMin(mat[i], i));
+        }
+    }
+    
+    /**
+     *
+     * @param mat
+     */
     public static void minMaxAgentsBelieves(double[][] mat) {
         int nbAgent = mat.length;
         for (int i = 0; i < nbAgent; i++) {
@@ -216,7 +229,7 @@ public class Main {
     }
 
     public static void initCluster(double[][] mat, double[][] croy) {
-        minMaxAgentsBelieves(mat);
+        averageDistanceBelieves(mat);
         int nbCroyance = croy[0].length;
         int nbAgents = mat.length;
         int[] agentInCluster = new int[nbAgents];
@@ -283,7 +296,7 @@ public class Main {
             }
             
         }
-        System.out.println("mise a jour cluster " +min+" "+max);
+//        System.out.println("mise a jour cluster " +min+" "+max);
         
     }
 
