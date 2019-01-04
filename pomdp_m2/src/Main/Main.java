@@ -132,12 +132,13 @@ public class Main {
                     tempAgent = i;
                     maxVal.clear();
                 }
+                maxVal.put(tempAgent, max);
                 if (max > lemax) {
                     lemax = max;
                     agent1max = a;
                     agent2max = i;
                 }
-                maxVal.put(tempAgent, max);
+
 //                lemax = maxi;
 //                agent1max = agent1temp;
 //                agent2max = agent2temp;
@@ -168,12 +169,12 @@ public class Main {
                     tempAgent = i;
                     minVal.clear();
                 }
+                minVal.put(tempAgent, min);
                 if (min < mini) {
                     mini = min;
                     agent1temp = a;
                     agent2temp = i;
                 }
-                minVal.put(tempAgent, min);
                 lemin = mini;
                 agent1min = agent1temp;
                 agent2min = agent2temp;
@@ -196,7 +197,7 @@ public class Main {
             mapAgentsMin.put(i, getMin(mat[i], i));
         }
     }
-    
+
     /**
      *
      * @param mat
@@ -228,9 +229,9 @@ public class Main {
         });
     }
 
-    public static void initCluster(double[][] mat, double[][] croy) {
+    public static void initCluster(double[][] mat, double[][] croyance) {
         averageDistanceBelieves(mat);
-        int nbCroyance = croy[0].length;
+        int nbCroyance = croyance[0].length;
         int nbAgents = mat.length;
         int[] agentInCluster = new int[nbAgents];
 
@@ -243,61 +244,112 @@ public class Main {
             agentInCluster[i] = i;
         }
 
-        cluster[0].add(agent1max);
-        clusterList.add(0, cluster[0]);
+//        cluster[0].add(agent1max);
+//        clusterList.add(0, cluster[0]);
 //        agentInCluster[0]=0;
-        cluster[1].add(agent2max);
-        clusterList.add(1, cluster[1]);
+//        cluster[1].add(agent2max);
+//        clusterList.add(1, cluster[1]);
 //        agentInCluster[1]=0;
-        if (agent1min == agent1max) {
-            cluster[0].add(agent2min);
-            clusterList.add(0, cluster[0]);
-        }
-        if (agent2min == agent1max) {
-            cluster[0].add(agent1min);
-            clusterList.add(0, cluster[0]);
-        }
-        if (agent1min == agent2max) {
-            cluster[1].add(agent2min);
-            clusterList.add(1, cluster[1]);
-        }
-        if (agent2min == agent2max) {
-            cluster[1].add(agent1min);
-            clusterList.add(1, cluster[1]);
-        }
-        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
-
-        miseAJourCluster(mat, agentInCluster, cluster);
+//        if (agent1min == agent1max) {
+//            cluster[0].add(agent2min);
+//            clusterList.add(0, cluster[0]);
+//        }
+//        if (agent2min == agent1max) {
+//            cluster[0].add(agent1min);
+//            clusterList.add(0, cluster[0]);
+//        }
+//        if (agent1min == agent2max) {
+//            cluster[1].add(agent2min);
+//            clusterList.add(1, cluster[1]);
+//        }
+//        if (agent2min == agent2max) {
+//            cluster[1].add(agent1min);
+//            clusterList.add(1, cluster[1]);
+//        }
+//        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
+        miseAJourCluster(mat, croyance);
     }
 
-    public static void miseAJourCluster(double[][] mat, int[] agentInCluster, List<Integer>[] cluster) {
+    public static void miseAJourCluster(double[][] mat, double[][] croyance) {
 
+        int nbCroyance = croyance[0].length;
         int nbAgents = mat.length;
         double max = Double.MIN_VALUE;
         double tempMax = 0;
         double min = Double.MAX_VALUE;
         double tempMin = 0;
+        int agent1min = 0;
+        int agent2min = 0;
+        int agent1max = 0;
+        int agent2max = 0;
+
+        List<Integer>[] cluster = new List[nbCroyance];
+        for (int i = 0; i < nbCroyance; i++) {
+            cluster[i] = new ArrayList<>();
+        }
 
         for (int i = 0; i < nbAgents; i++) {
             for (int j = 0; j < nbAgents; j++) {
-                
+
                 if (i != j) {
                     tempMin = mat[i][j];
                     tempMax = mat[i][j];
                     if (tempMin < min) {
                         min = tempMin;
+                        agent1min = i;
+                        agent2min = j;
                     }
                     if (tempMax > max) {
                         max = tempMax;
+                        agent1max = i;
+                        agent2max = j;
 
                     }
                 }
-                
+
             }
-            
+
         }
-//        System.out.println("mise a jour cluster " +min+" "+max);
-        
+
+        System.out.println("a_i_min : " + agent1min + " , a_j_min : " + agent2min + " , min = " + min + "; a_i_max : " + agent1max + " , a_j_max : " + agent2max + " , max = " + max);
+
+        cluster[0].add(agent1max);
+        clusterList.add(0, cluster[0]);
+//        agentInCluster[0]=0;
+        cluster[1].add(agent2max);
+        clusterList.add(1, cluster[1]);
+//        if (agent1max == agent1min) {
+//            cluster[0].add(agent2min);
+//            clusterList.add(0, cluster[0]);
+//        }
+//        if (agent2max == agent1min) {
+//            cluster[0].add(agent2min);
+//            clusterList.add(0, cluster[0]);
+//        }
+//        if (agent1max == agent2min) {
+//            cluster[1].add(agent1min);
+//            clusterList.add(1, cluster[1]);
+//        }
+//        if (agent2max == agent2min) {
+//            cluster[1].add(agent1min);
+//            clusterList.add(1, cluster[1]);
+//        }
+//        for (List<Integer> list : cluster) {
+//            for (int j = 0; j < list.size(); j++) {
+//                if (agent1min == list.get(j)) {
+//                    list.add(j, agent2min);
+//
+//                }
+//                if (agent2min == list.get(j)) {
+//                    list.add(j, agent1min);
+//
+//                }
+//
+//            }
+//        }
+
+        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
+
     }
 
     @FunctionalInterface
@@ -360,15 +412,6 @@ public class Main {
         for (double[] agent : resBa1) {
             System.out.println(Arrays.toString(agent));
         }
-        System.out.println("");
-        System.out.println(" Cluster : ");
-        initCluster(resBa1, listOfValue11);
-        System.out.println(" max ");
-        System.out.println(mapAgentsMax.entrySet());
-        System.out.println(lemax + " " + agent1max + " " + agent2max);
-        System.out.println(" min ");
-        System.out.println(mapAgentsMin.entrySet());
-        System.out.println(lemin + " " + agent1min + " " + agent2min);
 
         System.out.println("");
         double resHe1[][] = matriceDistanceAgents(listOfValue11, "H");
@@ -377,15 +420,6 @@ public class Main {
         for (double[] agent : resHe1) {
             System.out.println(Arrays.toString(agent));
         }
-        System.out.println("");
-        System.out.println(" Cluster : ");
-        initCluster(resHe1, listOfValue11);
-        System.out.println(" max ");
-        System.out.println(mapAgentsMax.entrySet());
-        System.out.println(lemax + " " + agent1max + " " + agent2max);
-        System.out.println(" min ");
-        System.out.println(mapAgentsMin.entrySet());
-        System.out.println(lemin + " " + agent1min + " " + agent2min);
 
         System.out.println("");
         double resK1[][] = matriceDistanceAgents(listOfValue11, "K");
@@ -395,14 +429,32 @@ public class Main {
             System.out.println(Arrays.toString(agent));
         }
         System.out.println("");
-        System.out.println(" Cluster : ");
+        System.out.println(" Cluster ba : ");
+        initCluster(resBa1, listOfValue11);
+//        System.out.println(" max ");
+//        System.out.println(mapAgentsMax.entrySet());
+//        System.out.println(lemax + " " + agent1max + " " + agent2max);
+//        System.out.println(" min ");
+//        System.out.println(mapAgentsMin.entrySet());
+//        System.out.println(lemin + " " + agent1min + " " + agent2min);
+        System.out.println("");
+        System.out.println(" Cluster he : ");
+        initCluster(resHe1, listOfValue11);
+//        System.out.println(" max ");
+//        System.out.println(mapAgentsMax.entrySet());
+//        System.out.println(lemax + " " + agent1max + " " + agent2max);
+//        System.out.println(" min ");
+//        System.out.println(mapAgentsMin.entrySet());
+//        System.out.println(lemin + " " + agent1min + " " + agent2min);
+        System.out.println("");
+        System.out.println(" Cluster ku : ");
         initCluster(resK1, listOfValue11);
-        System.out.println(" max ");
-        System.out.println(mapAgentsMax.entrySet());
-        System.out.println(lemax + " " + agent1max + " " + agent2max);
-        System.out.println(" min ");
-        System.out.println(mapAgentsMin.entrySet());
-        System.out.println(lemin + " " + agent1min + " " + agent2min);
+//        System.out.println(" max ");
+//        System.out.println(mapAgentsMax.entrySet());
+//        System.out.println(lemax + " " + agent1max + " " + agent2max);
+//        System.out.println(" min ");
+//        System.out.println(mapAgentsMin.entrySet());
+//        System.out.println(lemin + " " + agent1min + " " + agent2min);
 
         System.out.println("");
         System.out.println("");
@@ -433,15 +485,24 @@ public class Main {
         for (double[] agent : resK2) {
             System.out.println(Arrays.toString(agent));
         }
+//        System.out.println("");
+//        System.out.println(" Cluster ba : ");
+//        initCluster(resBa2, listOfValue2);
+//        System.out.println(" max ");
+//        System.out.println(mapAgentsMax.entrySet());
+//        System.out.println(lemax + " " + agent1max + " " + agent2max);
+//        System.out.println(" min ");
+//        System.out.println(mapAgentsMin.entrySet());
+//        System.out.println(lemin + " " + agent1min + " " + agent2min);
         System.out.println("");
-        System.out.println(" Cluster : ");
+        System.out.println(" Cluster Ba : ");
         initCluster(resBa2, listOfValue2);
-        System.out.println(" max ");
-        System.out.println(mapAgentsMax.entrySet());
-        System.out.println(lemax + " " + agent1max + " " + agent2max);
-        System.out.println(" min ");
-        System.out.println(mapAgentsMin.entrySet());
-        System.out.println(lemin + " " + agent1min + " " + agent2min);
+                System.out.println("");
+        System.out.println(" Cluster He : ");
+        initCluster(resHe2, listOfValue2);
+                System.out.println("");
+        System.out.println(" Cluster Ku : ");
+        initCluster(resK2, listOfValue2);
 
     }
 }
