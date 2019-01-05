@@ -15,17 +15,8 @@ import java.util.Map.Entry;
  */
 public class Main {
 
-    static Map<String, double[]> problem1 = new HashMap<>();
-    static Map<String, double[]> problem2 = new HashMap<>();
-    static Map<String, double[]> problem3 = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMax = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMin = new HashMap<>();
-//    static double lemax = Double.MIN_VALUE;
-//    static double lemin = Double.MAX_VALUE;
-//    static int agent1max;
-//    static int agent2max;
-//    static int agent1min;
-//    static int agent2min;
     static List<List<Integer>> clusterList = new ArrayList<List<Integer>>();
 
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
@@ -102,11 +93,7 @@ public class Main {
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < liste.length; j++) {
                 if ("B".equals(typeDistance)) {
-//                    if (i == j) {
-//                        distance[i][j] = -1;
-//                    }
                     distance[i][j] = distanceBattacharya(liste[i], liste[j]);
-
                 }
                 if ("H".equals(typeDistance)) {
                     distance[i][j] = distanceHellinger(liste[i], liste[j]);
@@ -130,9 +117,6 @@ public class Main {
         double max = Double.MIN_VALUE;
         double temp;
         int tempAgent = 0;
-//        double maxi = Double.MIN_VALUE;
-//        int agent1temp = 0;
-//        int agent2temp = 0;
         for (int i = 0; i < v.length; i++) {
             if (i != a) {
                 temp = v[i];
@@ -142,15 +126,6 @@ public class Main {
                     maxVal.clear();
                 }
                 maxVal.put(tempAgent, max);
-//                if (max > lemax) {
-//                    lemax = max;
-//                    agent1max = a;
-//                    agent2max = i;
-//                }
-
-//                lemax = maxi;
-//                agent1max = agent1temp;
-//                agent2max = agent2temp;
             }
         }
         return maxVal;
@@ -167,9 +142,6 @@ public class Main {
         double min = Double.MAX_VALUE;
         double temp;
         int tempAgent = 0;
-//        double mini = Double.MAX_VALUE;
-//        int agent1temp = 0;
-//        int agent2temp = 0;
         for (int i = 0; i < v.length; i++) {
             if (i != a) {
                 temp = v[i];
@@ -179,17 +151,7 @@ public class Main {
                     minVal.clear();
                 }
                 minVal.put(tempAgent, min);
-//                if (min < mini) {
-//                    mini = min;
-//                    agent1temp = a;
-//                    agent2temp = i;
-//                }
-//                lemin = mini;
-//                agent1min = agent1temp;
-//                agent2min = agent2temp;
-
             }
-
         }
 
         return minVal;
@@ -241,41 +203,6 @@ public class Main {
     public static void initCluster(double[][] mat, double[][] croyance) {
 //        averageDistanceBelieves(croyance);
 
-//        int nbCroyance = croyance[0].length;
-//        int nbAgents = mat.length;
-//        int[] agentInCluster = new int[nbAgents];
-//
-//        List<Integer>[] cluster = new List[nbCroyance];
-//        for (int i = 0; i < nbCroyance; i++) {
-//            cluster[i] = new ArrayList<>();
-//        }
-//
-//        for (int i = 0; i < nbAgents; i++) {
-//            agentInCluster[i] = i;
-//        }
-//        cluster[0].add(agent1max);
-//        clusterList.add(0, cluster[0]);
-//        agentInCluster[0]=0;
-//        cluster[1].add(agent2max);
-//        clusterList.add(1, cluster[1]);
-//        agentInCluster[1]=0;
-//        if (agent1min == agent1max) {
-//            cluster[0].add(agent2min);
-//            clusterList.add(0, cluster[0]);
-//        }
-//        if (agent2min == agent1max) {
-//            cluster[0].add(agent1min);
-//            clusterList.add(0, cluster[0]);
-//        }
-//        if (agent1min == agent2max) {
-//            cluster[1].add(agent2min);
-//            clusterList.add(1, cluster[1]);
-//        }
-//        if (agent2min == agent2max) {
-//            cluster[1].add(agent1min);
-//            clusterList.add(1, cluster[1]);
-//        }
-//        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
         miseAJourCluster(mat, croyance);
         minMaxAgentsBelieves(mat);
 
@@ -298,7 +225,6 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
-        double[][] mat = matx;
 
         List<Integer>[] cluster = new List[nbCroyance];
         for (int i = 0; i < nbCroyance; i++) {
@@ -326,55 +252,27 @@ public class Main {
             }
         }
 
-//        supprimerIndiceMat(mat,agent1min);
-//        System.out.println("a_i_min : " + agent1min + " , a_j_min : " + agent2min + " , min = " + min + "; a_i_max : " + agent1max + " , a_j_max : " + agent2max + " , max = " + max);
         cluster[0].add(agent1max);
-//        clusterList.add(0, cluster[0]);
         cluster[1].add(agent2max);
-//        clusterList.add(1, cluster[1]);
         nbAgent -= 2;
         if (agent1min == agent1max) {
             cluster[0].add(agent2min);
-//            for (int i = 0; i < mat.length; i++) {
-//                mat[agent2min][i] = -1;
-//                mat[i][agent2min] = -1;
-//            }
-//            clusterList.add(0, cluster[0]);
+            nbAgent -= 1;
         } else if (agent2min == agent1max) {
             cluster[0].add(agent1min);
-//            for (int i = 0; i < mat.length; i++) {
-//                mat[agent1min][i] = -1;
-//                mat[i][agent1min] = -1;
-//            }
-//            clusterList.add(0, cluster[0]);
+            nbAgent -= 1;
         } else if (agent1min == agent2max) {
             cluster[1].add(agent2min);
-//            for (int i = 0; i < mat.length; i++) {
-//                mat[agent2min][i] = -1;
-//                mat[i][agent2min] = -1;
-//            }
-//            clusterList.add(1, cluster[1]);
+            nbAgent -= 1;
         } else if (agent2min == agent2max) {
             cluster[1].add(agent1min);
-//            for (int i = 0; i < mat.length; i++) {
-//                mat[agent1min][i] = -1;
-//                mat[i][agent1min] = -1;
-//            }
-//            clusterList.add(1, cluster[1]);
+            nbAgent -= 1;
         } else {
             cluster[2].add(agent1min);
             cluster[2].add(agent2min);
+            nbAgent -= 2;
         }
 
-//        for (int i = 0; i < mat.length; i++) {
-//            mat[agent1max][i] = -1;
-//            mat[agent2max][i] = -1;
-//            mat[i][agent1max] = -1;
-//            mat[i][agent2max] = -1;
-//        }
-//        for (int i = 0; i < mat.length; i++) {
-//            System.out.println(Arrays.toString(mat[i]));
-//        }
         System.out.println("");
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
@@ -449,23 +347,6 @@ public class Main {
 
     public static void affichage(String[] listAgent, String[] listFeatures, double[][] listValues) {
         
-//        for (String agent : listOfAgent1) {
-//            for (double[] val : listOfValue11) {
-//                problem1.put(agent, val);
-//            }
-//        }
-//
-//        for (String agent : listOfAgent2) {
-//            for (double[] val : listOfValue2) {
-//                problem2.put(agent, val);
-//            }
-//        }
-//        
-//        for (String agent : listOfAgent3) {
-//            for (double[] val : listOfValue3) {
-//                problem3.put(agent, val);
-//            }
-//        }
 
         System.out.println("Nouveau Test");
         System.out.println("");
