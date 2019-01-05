@@ -23,7 +23,7 @@ public class Main {
     static String[] listOfFeatures1 = {"Civile", "Militaire"};
     static double[][] listOfValue11 = {{0.6, 0.4}, {0.4, 0.6}, {0.85, 0.15}, {0.75, 0.25}};
     static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};
-    static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.99, 0.01}};
+    static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.96, 0.04}};
 
     static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
     static String[] listOfFeatures2 = {"Rouge", "Vert", "Bleu", "Blanc"};
@@ -268,11 +268,31 @@ public class Main {
             cluster[1].add(agent1min);
             nbAgent -= 1;
         } else {
-            cluster[2].add(agent1min);
-            cluster[2].add(agent2min);
-            nbAgent -= 2;
+            if (nbCroyance > 2) {
+                cluster[2].add(agent1min);
+                cluster[2].add(agent2min);
+                nbAgent -= 2;
+            }
         }
-        
+
+//        if (agent1min != agent1max
+//                || agent1min != agent2max
+//                || agent2min != agent1max
+//                || agent2min != agent2max) {
+//            if (nbCroyance > 2) {
+//                cluster[2].add(agent1min);
+//                cluster[2].add(agent2min);
+//                nbAgent -= 2;
+//            }
+//            else {
+//                cluster[0].add(agent1min);
+//                cluster[0].add(agent2min);
+//                nbAgent -= 2;
+//                
+//            }
+//        }
+
+
 //        for (int i = 0; i < matx.length; i++) {
 //            for (int j = 0; j < matx[i].length; j++) {
 //
@@ -298,7 +318,6 @@ public class Main {
 //            }
 //        }
 //        System.out.println("Min : "+agent1min+" "+agent2min+" Max : "+agent1max+" "+agent2max);
-
         System.out.println("");
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
@@ -372,13 +391,12 @@ public class Main {
     }
 
     public static void affichage(String[] listAgent, String[] listFeatures, double[][] listValues) {
-        
 
         System.out.println("Nouveau Test");
         System.out.println("");
         System.out.println("Matrice de croyance :");
         System.out.println(Arrays.toString(listFeatures));
-        for (int i = 0; i < listFeatures.length; i++) {
+        for (int i = 0; i < listAgent.length; i++) {
             System.out.println("Agent" + String.valueOf(i) + " " + Arrays.toString(listValues[i]));
         }
         System.out.println("");
@@ -435,7 +453,6 @@ public class Main {
 //        System.out.println("mapAgentsMax");
 //        System.out.println("");
 //        compareMax(mapAgentsMax);
-
     }
 
     /**
@@ -444,17 +461,15 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-        
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-        
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-        
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
+        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+
+        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+
+        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+
+        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
     }
 }
