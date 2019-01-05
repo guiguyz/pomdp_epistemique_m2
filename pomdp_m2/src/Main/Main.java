@@ -31,7 +31,7 @@ public class Main {
 
     static String[] listOfAgent3 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent6"};
     static String[] listOfFeatures3 = {"C1", "C2", "C3"};
-    static double[][] listOfValue3 = {{0.98, 0.01, 0.01}, {0.01, 0.98, 0.01}, {0.01, 0.01, 0.98}, {0.33, 0.33, 0.34}, {0.34, 0.33, 0.33}, {0.33, 0.34, 0.34}, {0.25, 0.5, 0.25}};
+    static double[][] listOfValue3 = {{0.98, 0.01, 0.01}, {0.01, 0.98, 0.01}, {0.01, 0.01, 0.98}, {0.34, 0.33, 0.33}, {0.33, 0.34, 0.33}, {0.33, 0.33, 0.34}, {0.25, 0.5, 0.25}};
 
     /**
      *
