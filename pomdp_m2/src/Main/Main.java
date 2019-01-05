@@ -272,6 +272,32 @@ public class Main {
             cluster[2].add(agent2min);
             nbAgent -= 2;
         }
+        
+//        for (int i = 0; i < matx.length; i++) {
+//            for (int j = 0; j < matx[i].length; j++) {
+//
+//                if (i != j &&
+//                        i!= agent1max && j!= agent2max &&
+//                        i!= agent2max && j!= agent1max &&
+//                        i!= agent1min && j!= agent2min &&
+//                        i!= agent2min && j!= agent1min) {
+//                    tempMin = matx[i][j];
+//                    tempMax = matx[i][j];
+//                    if (tempMin < min) {
+//                        min = tempMin;
+//                        agent1min = i;
+//                        agent2min = j;
+//                    }
+//                    if (tempMax > max) {
+//                        max = tempMax;
+//                        agent1max = i;
+//                        agent2max = j;
+//
+//                    }
+//                }
+//            }
+//        }
+//        System.out.println("Min : "+agent1min+" "+agent2min+" Max : "+agent1max+" "+agent2max);
 
         System.out.println("");
         for (List<Integer> cluster1 : cluster) {
@@ -391,7 +417,7 @@ public class Main {
 
         System.out.println("");
         double resK[][] = matriceDistanceAgents(listValues, "K");
-        System.out.println("Matrice de divergence de KBL" + Arrays.toString(listFeatures) + " :");
+        System.out.println("Matrice de divergence de KBL " + Arrays.toString(listFeatures) + " :");
         System.out.println(Arrays.toString(listAgent));
         for (double[] agent : resK) {
             System.out.println(Arrays.toString(agent));
@@ -420,6 +446,10 @@ public class Main {
 
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+        
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+        
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
         
         affichage(listOfAgent2, listOfFeatures2, listOfValue2);
         
