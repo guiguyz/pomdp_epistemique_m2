@@ -19,12 +19,12 @@ public class Main {
     static Map<String, double[]> problem2 = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMax = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMin = new HashMap<>();
-    static double lemax = Double.MIN_VALUE;
-    static double lemin = Double.MAX_VALUE;
-    static int agent1max;
-    static int agent2max;
-    static int agent1min;
-    static int agent2min;
+//    static double lemax = Double.MIN_VALUE;
+//    static double lemin = Double.MAX_VALUE;
+//    static int agent1max;
+//    static int agent2max;
+//    static int agent1min;
+//    static int agent2min;
     static List<List<Integer>> clusterList = new ArrayList<List<Integer>>();
 
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
@@ -97,7 +97,11 @@ public class Main {
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < liste.length; j++) {
                 if ("B".equals(typeDistance)) {
+//                    if (i == j) {
+//                        distance[i][j] = -1;
+//                    }
                     distance[i][j] = distanceBattacharya(liste[i], liste[j]);
+
                 }
                 if ("H".equals(typeDistance)) {
                     distance[i][j] = distanceHellinger(liste[i], liste[j]);
@@ -121,9 +125,9 @@ public class Main {
         double max = Double.MIN_VALUE;
         double temp;
         int tempAgent = 0;
-        double maxi = Double.MIN_VALUE;
-        int agent1temp = 0;
-        int agent2temp = 0;
+//        double maxi = Double.MIN_VALUE;
+//        int agent1temp = 0;
+//        int agent2temp = 0;
         for (int i = 0; i < v.length; i++) {
             if (i != a) {
                 temp = v[i];
@@ -133,11 +137,11 @@ public class Main {
                     maxVal.clear();
                 }
                 maxVal.put(tempAgent, max);
-                if (max > lemax) {
-                    lemax = max;
-                    agent1max = a;
-                    agent2max = i;
-                }
+//                if (max > lemax) {
+//                    lemax = max;
+//                    agent1max = a;
+//                    agent2max = i;
+//                }
 
 //                lemax = maxi;
 //                agent1max = agent1temp;
@@ -158,9 +162,9 @@ public class Main {
         double min = Double.MAX_VALUE;
         double temp;
         int tempAgent = 0;
-        double mini = Double.MAX_VALUE;
-        int agent1temp = 0;
-        int agent2temp = 0;
+//        double mini = Double.MAX_VALUE;
+//        int agent1temp = 0;
+//        int agent2temp = 0;
         for (int i = 0; i < v.length; i++) {
             if (i != a) {
                 temp = v[i];
@@ -170,14 +174,14 @@ public class Main {
                     minVal.clear();
                 }
                 minVal.put(tempAgent, min);
-                if (min < mini) {
-                    mini = min;
-                    agent1temp = a;
-                    agent2temp = i;
-                }
-                lemin = mini;
-                agent1min = agent1temp;
-                agent2min = agent2temp;
+//                if (min < mini) {
+//                    mini = min;
+//                    agent1temp = a;
+//                    agent2temp = i;
+//                }
+//                lemin = mini;
+//                agent1min = agent1temp;
+//                agent2min = agent2temp;
 
             }
 
@@ -190,11 +194,11 @@ public class Main {
      *
      * @param mat
      */
-    public static void averageDistanceBelieves(double[][] mat) {
-        int nbAgent = mat.length;
-        for (int i = 0; i < nbAgent; i++) {
-            mapAgentsMax.put(i, getMax(mat[i], i));
-            mapAgentsMin.put(i, getMin(mat[i], i));
+    public static void averageDistanceBelieves(double[][] croyance) {
+        for (int i = 0; i < croyance.length; i++) {
+            for (int j = 0; j < croyance[i].length; j++) {
+
+            }
         }
     }
 
@@ -210,28 +214,28 @@ public class Main {
         }
     }
 
+    /**
+     *
+     * @param maxv
+     */
     public static void compareMax(Map<Integer, Map<Integer, Double>> maxv) {
-        double temp;
-        double maxi = Double.MIN_VALUE;
-        double val;
 
         maxv.entrySet().forEach((Entry<Integer, Map<Integer, Double>> entry) -> {
-            //            maxi=(Collections.max(entry.getValue()));
 //            System.out.println(entry.getKey() + " " + entry.getValue().keySet() + " " + (entry.getValue().values()));
-            for (int i = 0; i < entry.getValue().values().size(); i++) {
-//                val = entry.getValue().values()[i];
-//                System.out.println(entry.getValue().values().getClass().getName());
-
-            }
-
-//            System.out.println(entry.getKey().getClass().getName());
-//            val[entry.getKey()]+=entry.getValue().values().toString();
+            System.out.println(entry.getKey() + " " + entry.getKey().getClass().getName());
+            System.out.println(entry.getValue().keySet() + " " + entry.getValue().keySet().getClass().getName());
+            System.out.println(entry.getValue().values() + " " + entry.getValue().values().getClass().getName());
         });
     }
 
+    /**
+     *
+     * @param mat
+     * @param croyance
+     */
     public static void initCluster(double[][] mat, double[][] croyance) {
-//        averageDistanceBelieves(mat);
-//        minMaxAgentsBelieves(mat);
+//        averageDistanceBelieves(croyance);
+
 //        int nbCroyance = croyance[0].length;
 //        int nbAgents = mat.length;
 //        int[] agentInCluster = new int[nbAgents];
@@ -267,11 +271,17 @@ public class Main {
 //            clusterList.add(1, cluster[1]);
 //        }
 //        System.out.println(clusterList.get(1) + " " + clusterList.get(0));
-
         miseAJourCluster(mat, croyance);
+        minMaxAgentsBelieves(mat);
 
     }
 
+    /**
+     *
+     * @param tableau
+     * @param index
+     * @return
+     */
     public static double[][] supprimerIndiceMat(double[][] tableau, int index) {
         int nRows = tableau.length;
         int nColumns = tableau[0].length;
@@ -300,6 +310,11 @@ public class Main {
         return newTab;
     }
 
+    /**
+     *
+     * @param matx
+     * @param croyance
+     */
     public static void miseAJourCluster(double[][] matx, double[][] croyance) {
 
         int nbAgent = matx[0].length;
@@ -319,12 +334,12 @@ public class Main {
             cluster[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat[i].length; j++) {
+        for (int i = 0; i < matx.length; i++) {
+            for (int j = 0; j < matx[i].length; j++) {
 
                 if (i != j) {
-                    tempMin = mat[i][j];
-                    tempMax = mat[i][j];
+                    tempMin = matx[i][j];
+                    tempMax = matx[i][j];
                     if (tempMin < min) {
                         min = tempMin;
                         agent1min = i;
@@ -341,8 +356,7 @@ public class Main {
         }
 
 //        supprimerIndiceMat(mat,agent1min);
-        System.out.println("a_i_min : " + agent1min + " , a_j_min : " + agent2min + " , min = " + min + "; a_i_max : " + agent1max + " , a_j_max : " + agent2max + " , max = " + max);
-
+//        System.out.println("a_i_min : " + agent1min + " , a_j_min : " + agent2min + " , min = " + min + "; a_i_max : " + agent1max + " , a_j_max : " + agent2max + " , max = " + max);
         cluster[0].add(agent1max);
 //        clusterList.add(0, cluster[0]);
         cluster[1].add(agent2max);
@@ -387,17 +401,16 @@ public class Main {
 //            mat[i][agent1max] = -1;
 //            mat[i][agent2max] = -1;
 //        }
-
 //        for (int i = 0; i < mat.length; i++) {
 //            System.out.println(Arrays.toString(mat[i]));
 //        }
-
         System.out.println("");
-        System.out.println("Cluster :");
+//        System.out.println("Cluster :");
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
         }
+        System.out.println("");
 //        System.out.println("Cluster : "+clusterList.get(1) + " " + clusterList.get(0));
 
     }
@@ -464,6 +477,15 @@ public class Main {
         }
 
         System.out.println("");
+        System.out.println("Cluster Battacharia : ");
+        initCluster(resBa1, listOfValue11);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
+        System.out.println("");
         double resHe1[][] = matriceDistanceAgents(listOfValue11, "H");
         System.out.println("Matrice de distance de Hellinger " + Arrays.toString(listOfFeatures1) + " :");
         System.out.println(Arrays.toString(listOfAgent1));
@@ -472,41 +494,32 @@ public class Main {
         }
 
         System.out.println("");
+        System.out.println("Cluster Hellinger : ");
+        initCluster(resHe1, listOfValue11);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
+        System.out.println("");
         double resK1[][] = matriceDistanceAgents(listOfValue11, "K");
         System.out.println("Matrice de divergence de KBL" + Arrays.toString(listOfFeatures1) + " :");
         System.out.println(Arrays.toString(listOfAgent1));
         for (double[] agent : resK1) {
             System.out.println(Arrays.toString(agent));
         }
-        System.out.println("");
-        System.out.println(" Cluster ba : ");
-        initCluster(resBa1, listOfValue11);
-//        System.out.println(" max ");
-//        System.out.println(mapAgentsMax.entrySet());
-//        System.out.println(lemax + " " + agent1max + " " + agent2max);
-//        System.out.println(" min ");
-//        System.out.println(mapAgentsMin.entrySet());
-//        System.out.println(lemin + " " + agent1min + " " + agent2min);
-        System.out.println("");
-        System.out.println(" Cluster he : ");
-        initCluster(resHe1, listOfValue11);
-//        System.out.println(" max ");
-//        System.out.println(mapAgentsMax.entrySet());
-//        System.out.println(lemax + " " + agent1max + " " + agent2max);
-//        System.out.println(" min ");
-//        System.out.println(mapAgentsMin.entrySet());
-//        System.out.println(lemin + " " + agent1min + " " + agent2min);
-        System.out.println("");
-        System.out.println(" Cluster ku : ");
-        initCluster(resK1, listOfValue11);
-//        System.out.println(" max ");
-//        System.out.println(mapAgentsMax.entrySet());
-//        System.out.println(lemax + " " + agent1max + " " + agent2max);
-//        System.out.println(" min ");
-//        System.out.println(mapAgentsMin.entrySet());
-//        System.out.println(lemin + " " + agent1min + " " + agent2min);
 
         System.out.println("");
+        System.out.println("Cluster divergence de KBL : ");
+        initCluster(resK1, listOfValue11);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
+        System.out.println("Nouveau test");
         System.out.println("");
 
         System.out.println("Matrice de croyance :");
@@ -514,6 +527,7 @@ public class Main {
         for (int i = 0; i < listOfValue2.length; i++) {
             System.out.println("Agent" + String.valueOf(i) + " " + Arrays.toString(listOfValue2[i]));
         }
+
         System.out.println("");
         double resBa2[][] = matriceDistanceAgents(listOfValue2, "B");
         System.out.println("Matrice de distance de Battacharia " + Arrays.toString(listOfFeatures2) + " :");
@@ -521,38 +535,50 @@ public class Main {
         for (double[] agent : resBa2) {
             System.out.println(Arrays.toString(agent));
         }
+
         System.out.println("");
+        System.out.println("Cluster Battacharia : ");
+        initCluster(resBa2, listOfValue2);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
         double resHe2[][] = matriceDistanceAgents(listOfValue2, "H");
         System.out.println("Matrice de distance de Hellinger " + Arrays.toString(listOfFeatures2) + " :");
         System.out.println(Arrays.toString(listOfAgent2));
         for (double[] agent : resHe2) {
             System.out.println(Arrays.toString(agent));
         }
+
         System.out.println("");
+        System.out.println("Cluster Hellinger : ");
+        initCluster(resHe2, listOfValue2);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
         double resK2[][] = matriceDistanceAgents(listOfValue2, "K");
         System.out.println("Matrice de divergence de KBL " + Arrays.toString(listOfFeatures2) + " :");
         System.out.println(Arrays.toString(listOfAgent2));
         for (double[] agent : resK2) {
             System.out.println(Arrays.toString(agent));
         }
-//        System.out.println("");
-//        System.out.println(" Cluster ba : ");
-//        initCluster(resBa2, listOfValue2);
-//        System.out.println(" max ");
-//        System.out.println(mapAgentsMax.entrySet());
-//        System.out.println(lemax + " " + agent1max + " " + agent2max);
-//        System.out.println(" min ");
-//        System.out.println(mapAgentsMin.entrySet());
-//        System.out.println(lemin + " " + agent1min + " " + agent2min);
+
         System.out.println("");
-        System.out.println(" Cluster Ba : ");
-        initCluster(resBa2, listOfValue2);
-        System.out.println("");
-        System.out.println(" Cluster He : ");
-        initCluster(resHe2, listOfValue2);
-        System.out.println("");
-        System.out.println(" Cluster Ku : ");
+        System.out.println("Cluster divergence de KBL : ");
         initCluster(resK2, listOfValue2);
+        System.out.println(" max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println(" min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+//        System.out.println("mapAgentsMax");
+//        System.out.println("");
+//        compareMax(mapAgentsMax);
 
     }
 }
