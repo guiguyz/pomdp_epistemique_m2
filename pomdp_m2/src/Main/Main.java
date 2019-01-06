@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 /**
  *
@@ -153,7 +154,6 @@ public class Main {
                 minVal.put(tempAgent, min);
             }
         }
-
         return minVal;
     }
 
@@ -187,11 +187,16 @@ public class Main {
      */
     public static void compareMax(Map<Integer, Map<Integer, Double>> maxv) {
 
-        maxv.entrySet().forEach((Entry<Integer, Map<Integer, Double>> entry) -> {
-//            System.out.println(entry.getKey() + " " + entry.getValue().keySet() + " " + (entry.getValue().values()));
-            System.out.println(entry.getKey() + " " + entry.getKey().getClass().getName());
-            System.out.println(entry.getValue().keySet() + " " + entry.getValue().keySet().getClass().getName());
-            System.out.println(entry.getValue().values() + " " + entry.getValue().values().getClass().getName());
+        maxv.entrySet().forEach(new Consumer<Entry<Integer, Map<Integer, Double>>>() {
+            @Override
+            public void accept(Entry<Integer, Map<Integer, Double>> entry) {
+                //            System.out.println(entry.getKey() + " " + entry.getValue().keySet() + " " + (entry.getValue().values()));
+                System.out.println(entry.getKey() );//+ " " + entry.getKey().getClass().getName()
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    System.out.println(entry.getValue().get(i));
+                }
+                
+            }
         });
     }
 
@@ -453,6 +458,8 @@ public class Main {
 //        System.out.println("mapAgentsMax");
 //        System.out.println("");
 //        compareMax(mapAgentsMax);
+        compareMax(mapAgentsMax);
+
     }
 
     /**
