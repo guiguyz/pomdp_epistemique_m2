@@ -159,7 +159,7 @@ public class Main {
 
     /**
      *
-     * @param mat
+     * @param croyance
      */
     public static void averageDistanceBelieves(double[][] croyance) {
         for (int i = 0; i < croyance.length; i++) {
@@ -393,6 +393,12 @@ public class Main {
         return 0.;
     }
 
+    /**
+     *
+     * @param listAgent
+     * @param listFeatures
+     * @param listValues
+     */
     public static void affichage(String[] listAgent, String[] listFeatures, double[][] listValues) {
 
         System.out.println("Nouveau Test");
