@@ -278,6 +278,7 @@ public class Main {
                 cluster[2].add(agent2min);
                 nbAgent -= 2;
             }
+            //TODO cas particulier
         }
 
 //        if (agent1min != agent1max
