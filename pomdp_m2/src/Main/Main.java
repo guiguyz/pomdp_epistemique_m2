@@ -191,11 +191,11 @@ public class Main {
             @Override
             public void accept(Entry<Integer, Map<Integer, Double>> entry) {
                 //            System.out.println(entry.getKey() + " " + entry.getValue().keySet() + " " + (entry.getValue().values()));
-                System.out.println(entry.getKey() );//+ " " + entry.getKey().getClass().getName()
+                System.out.println(entry.getKey());//+ " " + entry.getKey().getClass().getName()
                 for (int i = 0; i < entry.getValue().size(); i++) {
                     System.out.println(entry.getValue().get(i));
                 }
-                
+
             }
         });
     }
@@ -296,8 +296,6 @@ public class Main {
 //                
 //            }
 //        }
-
-
 //        for (int i = 0; i < matx.length; i++) {
 //            for (int j = 0; j < matx[i].length; j++) {
 //
@@ -420,6 +418,7 @@ public class Main {
         System.out.println("Liste min ");
         System.out.println(mapAgentsMin.entrySet());
         System.out.println("");
+//        compareMax(mapAgentsMax);
 
         System.out.println("");
         double resHe[][] = matriceDistanceAgents(listValues, "H");
@@ -458,8 +457,6 @@ public class Main {
 //        System.out.println("mapAgentsMax");
 //        System.out.println("");
 //        compareMax(mapAgentsMax);
-        compareMax(mapAgentsMax);
-
     }
 
     /**
