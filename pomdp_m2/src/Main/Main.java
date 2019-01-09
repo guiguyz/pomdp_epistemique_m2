@@ -277,6 +277,19 @@ public class Main {
                 cluster[2].add(agent1min);
                 cluster[2].add(agent2min);
                 nbAgent -= 2;
+            } else {
+                if(matx[agent1max][agent1min]<matx[agent2max][agent1min]){
+                    cluster[0].add(agent1min);                    
+                } 
+                if(matx[agent1max][agent1min]>matx[agent2max][agent1min]){
+                    cluster[1].add(agent1min);                    
+                }
+                if(matx[agent1max][agent2min]<matx[agent2max][agent2min]){
+                    cluster[0].add(agent2min);                    
+                } 
+                if(matx[agent1max][agent2min]>matx[agent2max][agent2min]){
+                    cluster[1].add(agent2min);                    
+                }
             }
             //TODO cas particulier
         }
@@ -472,15 +485,15 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+//
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//
+//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
     }
 }
