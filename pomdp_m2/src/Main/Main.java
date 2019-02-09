@@ -18,6 +18,7 @@ public class Main {
 
     static Map<Integer, Map<Integer, Double>> mapAgentsMax = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMin = new HashMap<>();
+//    static ArrayList<Double> arrayAgentsMin = new ArrayList<>();
     static List<List<Integer>> clusterList = new ArrayList<List<Integer>>();
 
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
@@ -159,6 +160,30 @@ public class Main {
 
     /**
      *
+     * @param v
+     * @param a
+     * @return
+     */
+    public static int getMinJ(double[] v, int a) {
+        double min = Double.MAX_VALUE;
+        double temp;
+        int tempAgent = 0;
+        int agentJ = 0;
+        for (int i = 0; i < v.length; i++) {
+            if (i != a) {
+                temp = v[i];
+                if (temp < min) {
+                    min = temp;
+                    tempAgent = i;
+                }
+                agentJ = tempAgent;
+            }
+        }
+        return agentJ;
+    }
+
+    /**
+     *
      * @param croyance
      */
     public static void averageDistanceBelieves(double[][] croyance) {
@@ -230,6 +255,13 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
+//        int agentJ = 0;
+
+        int[] agentClust = new int[nbAgent];
+        for (int i = 0; i < nbAgent; i++) {
+            agentClust[i] = i;
+        }
+        System.out.println("agentClust : " + Arrays.toString(agentClust));
 
         List<Integer>[] cluster = new List[nbCroyance];
         for (int i = 0; i < nbCroyance; i++) {
@@ -259,82 +291,60 @@ public class Main {
 
         cluster[0].add(agent1max);
         cluster[1].add(agent2max);
+        agentClust[agent1max] = -1;
+        agentClust[agent2max] = -1;
         nbAgent -= 2;
         if (agent1min == agent1max) {
             cluster[0].add(agent2min);
+            agentClust[agent2min] = -1;
             nbAgent -= 1;
         } else if (agent2min == agent1max) {
             cluster[0].add(agent1min);
+            agentClust[agent1min] = -1;
             nbAgent -= 1;
         } else if (agent1min == agent2max) {
             cluster[1].add(agent2min);
+            agentClust[agent2min] = -1;
             nbAgent -= 1;
         } else if (agent2min == agent2max) {
             cluster[1].add(agent1min);
+            agentClust[agent1min] = -1;
             nbAgent -= 1;
         } else {
             if (nbCroyance > 2) {
                 cluster[2].add(agent1min);
                 cluster[2].add(agent2min);
+                agentClust[agent1min] = -1;
+                agentClust[agent2min] = -1;
                 nbAgent -= 2;
-            } else {
-                if(matx[agent1max][agent1min]<matx[agent2max][agent1min]){
-                    cluster[0].add(agent1min);                    
-                } 
-                if(matx[agent1max][agent1min]>matx[agent2max][agent1min]){
-                    cluster[1].add(agent1min);                    
-                }
-                if(matx[agent1max][agent2min]<matx[agent2max][agent2min]){
-                    cluster[0].add(agent2min);                    
-                } 
-                if(matx[agent1max][agent2min]>matx[agent2max][agent2min]){
-                    cluster[1].add(agent2min);                    
-                }
             }
-            //TODO cas particulier
         }
 
-//        if (agent1min != agent1max
-//                || agent1min != agent2max
-//                || agent2min != agent1max
-//                || agent2min != agent2max) {
-//            if (nbCroyance > 2) {
-//                cluster[2].add(agent1min);
-//                cluster[2].add(agent2min);
-//                nbAgent -= 2;
-//            }
-//            else {
-//                cluster[0].add(agent1min);
-//                cluster[0].add(agent2min);
-//                nbAgent -= 2;
-//                
-//            }
-//        }
-//        for (int i = 0; i < matx.length; i++) {
-//            for (int j = 0; j < matx[i].length; j++) {
+        System.out.println("");
+        System.out.println("agentClust : " + Arrays.toString(agentClust));
+        int[] tempClust = new int[1];
+        for (int i = 0; i < agentClust.length; i++) {
+            if (agentClust[i] != -1) {
+                for (int j = 0; j < cluster.length; j++) {
+                    for (int k = 0; k < cluster[j].size(); k++) {
+                        int agentJ = getMinJ(matx[agentClust[i]], agentClust[i]);
+                        System.out.println(" Ai : " + agentClust[i] + " Aj : " + agentJ);
+                        if(agentJ==cluster[j].get(k)){
+                            System.out.println("OK");
+                            cluster[j].add(agentClust[i]);
+                            agentClust[i] = -1;
+//                            break;
+                        }
+                        break;
+//                        else{
 //
-//                if (i != j &&
-//                        i!= agent1max && j!= agent2max &&
-//                        i!= agent2max && j!= agent1max &&
-//                        i!= agent1min && j!= agent2min &&
-//                        i!= agent2min && j!= agent1min) {
-//                    tempMin = matx[i][j];
-//                    tempMax = matx[i][j];
-//                    if (tempMin < min) {
-//                        min = tempMin;
-//                        agent1min = i;
-//                        agent2min = j;
-//                    }
-//                    if (tempMax > max) {
-//                        max = tempMax;
-//                        agent1max = i;
-//                        agent2max = j;
-//
-//                    }
-//                }
-//            }
-//        }
-//        System.out.println("Min : "+agent1min+" "+agent2min+" Max : "+agent1max+" "+agent2max);
+//                            
+//                        }
+                    }
+                }
+            }
+        }
+
         System.out.println("");
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
@@ -487,13 +497,13 @@ public class Main {
 
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//
+
 //        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-//
-//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+
+        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
     }
 }
