@@ -322,30 +322,47 @@ public class Main {
 
         System.out.println("");
         System.out.println("agentClust : " + Arrays.toString(agentClust));
-        int[] tempClust = new int[1];
+        System.out.println("");
+        ArrayList<Integer> tempClust = new ArrayList<>();
         for (int i = 0; i < agentClust.length; i++) {
             if (agentClust[i] != -1) {
                 for (int j = 0; j < cluster.length; j++) {
                     for (int k = 0; k < cluster[j].size(); k++) {
-                        int agentJ = getMinJ(matx[agentClust[i]], agentClust[i]);
-                        System.out.println(" Ai : " + agentClust[i] + " Aj : " + agentJ);
-                        if(agentJ==cluster[j].get(k)){
+                        int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
+//                        System.out.println(" Ai : " + agentClust[i] + " Aj : " + agentMinJ);
+                        if (agentMinJ != cluster[j].get(k)) {
+                            tempClust.add(agentClust[i]);
+                            tempClust.add(agentMinJ);
+                            System.out.println(tempClust);
+                            if (tempClust.contains(cluster[j].get(k))) {
+                                cluster[j].addAll(tempClust);
+//                                agentClust[i]=-1;
+//                                agentClust[agentMinJ]=-1;
+                                for (int l = 0; l < tempClust.size(); l++) {
+                                    System.out.println(tempClust.get(i));
+                                    agentClust[tempClust.get(j)] = -1;
+                                    agentClust[tempClust.get(i)] = -1;
+                                }
+                                tempClust.clear();
+                                
+                            }
+                            break;
+                        }
+                        if (agentMinJ == cluster[j].get(k)) {
                             System.out.println("OK");
                             cluster[j].add(agentClust[i]);
                             agentClust[i] = -1;
-//                            break;
+                            break;
                         }
-                        break;
-//                        else{
-//
-//                            
-//                        }
                     }
                 }
             }
         }
 
         System.out.println("");
+        System.out.println("agentClust : " + Arrays.toString(agentClust));
+        System.out.println("");
+
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
@@ -496,13 +513,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-
 //        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-
         affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
     }
