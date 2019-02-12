@@ -564,7 +564,7 @@ public class Main {
 //        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
-        GenereAlea genereAlea = new GenereAlea(10,5);
+        GenereAlea genereAlea = new GenereAlea(5,2);
         affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
 
     }
