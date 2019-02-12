@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Consumer;
 
 /**
  *
@@ -24,7 +22,7 @@ public class Main {
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
     static String[] listOfFeatures1 = {"Civile", "Militaire"};
     static double[][] listOfValue11 = {{0.6, 0.4}, {0.4, 0.6}, {0.85, 0.15}, {0.75, 0.25}};
-    static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};
+    static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};//{0.8,0.2}
     static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.96, 0.04}};
 
     static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
@@ -208,25 +206,6 @@ public class Main {
 
     /**
      *
-     * @param maxv
-     */
-    public static void compareMax(Map<Integer, Map<Integer, Double>> maxv) {
-
-        maxv.entrySet().forEach(new Consumer<Entry<Integer, Map<Integer, Double>>>() {
-            @Override
-            public void accept(Entry<Integer, Map<Integer, Double>> entry) {
-                //            System.out.println(entry.getKey() + " " + entry.getValue().keySet() + " " + (entry.getValue().values()));
-                System.out.println(entry.getKey());//+ " " + entry.getKey().getClass().getName()
-                for (int i = 0; i < entry.getValue().size(); i++) {
-                    System.out.println(entry.getValue().get(i));
-                }
-
-            }
-        });
-    }
-
-    /**
-     *
      * @param mat
      * @param croyance
      */
@@ -255,13 +234,11 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
-//        int agentJ = 0;
 
         int[] agentClust = new int[nbAgent];
         for (int i = 0; i < nbAgent; i++) {
             agentClust[i] = i;
         }
-        System.out.println("agentClust : " + Arrays.toString(agentClust));
 
         List<Integer>[] cluster = new List[nbCroyance];
         for (int i = 0; i < nbCroyance; i++) {
@@ -318,41 +295,33 @@ public class Main {
                 agentClust[agent2min] = -1;
                 nbAgent -= 2;
             }
+            else if (nbCroyance < 2){
+                
+            }
         }
 
         System.out.println("");
         System.out.println("agentClust : " + Arrays.toString(agentClust));
         System.out.println("");
-        ArrayList<Integer> tempClust = new ArrayList<>();
-        for (int i = 0; i < agentClust.length; i++) {
-            if (agentClust[i] != -1) {
-                for (int j = 0; j < cluster.length; j++) {
-                    for (int k = 0; k < cluster[j].size(); k++) {
-                        int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
-//                        System.out.println(" Ai : " + agentClust[i] + " Aj : " + agentMinJ);
-                        if (agentMinJ != cluster[j].get(k)) {
-                            tempClust.add(agentClust[i]);
-                            tempClust.add(agentMinJ);
-                            System.out.println(tempClust);
-                            if (tempClust.contains(cluster[j].get(k))) {
-                                cluster[j].addAll(tempClust);
-//                                agentClust[i]=-1;
-//                                agentClust[agentMinJ]=-1;
-                                for (int l = 0; l < tempClust.size(); l++) {
-                                    System.out.println(tempClust.get(i));
-                                    agentClust[tempClust.get(j)] = -1;
-                                    agentClust[tempClust.get(i)] = -1;
-                                }
-                                tempClust.clear();
-                                
+        for (List<Integer> cluster1 : cluster) {
+            System.out.println(cluster1);
+
+        }
+        System.out.println("");
+
+        while (testAgentClust(agentClust)) {
+            for (int i = 0; i < agentClust.length; i++) {
+                if (agentClust[i] != -1) {
+                    int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
+                    for (List<Integer> cluster1 : cluster) {
+                        for (int k = 0; k < cluster1.size(); k++) {
+                            System.out.println(agentClust[i]+" en min avec "+agentMinJ +" == "+cluster1.get(k)+" dans un cluster alors ");
+                            System.out.println(agentMinJ==cluster1.get(k));
+                            if (agentMinJ == cluster1.get(k)) {
+                                cluster1.add(agentClust[i]);
+                                agentClust[i] = -1;
+                                break;
                             }
-                            break;
-                        }
-                        if (agentMinJ == cluster[j].get(k)) {
-                            System.out.println("OK");
-                            cluster[j].add(agentClust[i]);
-                            agentClust[i] = -1;
-                            break;
                         }
                     }
                 }
@@ -362,12 +331,21 @@ public class Main {
         System.out.println("");
         System.out.println("agentClust : " + Arrays.toString(agentClust));
         System.out.println("");
-
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
         }
         System.out.println("");
+
+    }
+
+    public static boolean testAgentClust(int[] agentClust) {
+        for (int i = 0; i < agentClust.length; i++) {
+            if (agentClust[i] != -1) {
+                return true;
+            }
+        }
+        return false;
 
     }
 
@@ -465,7 +443,6 @@ public class Main {
         System.out.println("Liste min ");
         System.out.println(mapAgentsMin.entrySet());
         System.out.println("");
-//        compareMax(mapAgentsMax);
 
         System.out.println("");
         double resHe[][] = matriceDistanceAgents(listValues, "H");
@@ -501,9 +478,6 @@ public class Main {
         System.out.println(mapAgentsMin.entrySet());
         System.out.println("");
 
-//        System.out.println("mapAgentsMax");
-//        System.out.println("");
-//        compareMax(mapAgentsMax);
     }
 
     /**
