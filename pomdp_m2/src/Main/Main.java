@@ -91,15 +91,19 @@ public class Main {
         double[][] distance = new double[nbAgent][nbAgent];
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < liste.length; j++) {
-                if ("B".equals(typeDistance)) {
-                    distance[i][j] = distanceBattacharya(liste[i], liste[j]);
+                if (i != j) {
+                    if ("B".equals(typeDistance)) {
+                        distance[i][j] = distanceBattacharya(liste[i], liste[j]);
+                    }
+                    if ("H".equals(typeDistance)) {
+                        distance[i][j] = distanceHellinger(liste[i], liste[j]);
+                    }
+                    if ("K".equals(typeDistance)) {
+                        distance[i][j] = divergenceKBL(liste[i], liste[j]);
+                    }
+
                 }
-                if ("H".equals(typeDistance)) {
-                    distance[i][j] = distanceHellinger(liste[i], liste[j]);
-                }
-                if ("K".equals(typeDistance)) {
-                    distance[i][j] = divergenceKBL(liste[i], liste[j]);
-                }
+
             }
         }
         return distance;
@@ -184,16 +188,23 @@ public class Main {
      * @param croyance
      */
     public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance) {
-        
-        double[] val = new double[croyance[0].length] ;
 
-        for (List<Integer> cluster1 : cluster) {
-            for (int i = 0; i < cluster1.size(); i++) {
-//                    val[i]+=croyance[i][i];
+        double[] val = new double[croyance[0].length];
+
+        for (int i = 0; i < cluster.length; i++) {
+            if (!cluster[i].isEmpty()) {
+                for (int j = 0; j < cluster[i].size(); i++) {
+                    for (int k = 0; k < croyance.length; k++) {
+                        for (int l = 0; l < croyance[k].length; l++) {
+//                            System.out.println(cluster[i].get(i));
+                            val[l] += croyance[cluster[i].get(i)][l];
+                        }
+                    }
+                }
             }
         }
-        
-        
+        System.out.println(Arrays.toString(val));
+
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
@@ -557,14 +568,13 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
 //        GenereAlea genereAlea = new GenereAlea(3,2);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
-
     }
 }

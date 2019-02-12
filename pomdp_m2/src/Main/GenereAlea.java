@@ -17,7 +17,6 @@ public class GenereAlea {
     int nbAgent;
     int nbCroyance;
     
-
     GenereAlea(int nbAgent, int nbCroyance) {
         this.nbAgent=nbAgent;
         this.nbCroyance=nbCroyance;
@@ -25,7 +24,7 @@ public class GenereAlea {
         genereListAgent(nbAgent);
         genereListCroyance(nbCroyance);
     }
-
+    
     /**
      *
      * @param nbAgent
@@ -36,8 +35,9 @@ public class GenereAlea {
         listValeur = new double[nbAgent][nbCroyance];
         for (double[] listValeur1 : listValeur) {
             double val = 0;
+            double un =1;
             for (int j = 0; j < listValeur1.length; j++) {
-                double rand=Math.random();
+                double rand=un-Math.random();
                 listValeur1[j] = rand;
                 val+=rand;
             }
