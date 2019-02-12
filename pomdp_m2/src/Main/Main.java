@@ -180,17 +180,27 @@ public class Main {
         return agentJ;
     }
 
-
     /**
      *
      * @param croyance
      */
-    public static void averageDistanceBelieves(double[][] croyance) {
-        for (int i = 0; i < croyance.length; i++) {
-            for (int j = 0; j < croyance[i].length; j++) {
+    public static void averageDistanceBelieves(List<Integer>[] cluster, double[][] croyance) {
+        
+        double[] val = new double[croyance[0].length] ;
 
+        for (List<Integer> cluster1 : cluster) {
+            for (int i = 0; i < cluster1.size(); i++) {
+//                    val[i]+=croyance[i][i];
             }
         }
+        
+        
+        for (List<Integer> cluster1 : cluster) {
+            System.out.println(cluster1);
+
+        }
+        System.out.println("");
+
     }
 
     /**
@@ -211,10 +221,10 @@ public class Main {
      * @param croyance
      */
     public static void initCluster(double[][] mat, double[][] croyance) {
-//        averageDistanceBelieves(croyance);
+
+        minMaxAgentsBelieves(mat);
 
         miseAJourCluster(mat, croyance);
-        minMaxAgentsBelieves(mat);
 
     }
 
@@ -261,7 +271,6 @@ public class Main {
                         max = tempMax;
                         agent1max = i;
                         agent2max = j;
-
                     }
                 }
             }
@@ -295,8 +304,7 @@ public class Main {
                 agentClust[agent1min] = -1;
                 agentClust[agent2min] = -1;
                 nbAgent -= 2;
-            } 
-            else {
+            } else {
                 if (matx[agent1min][agent1max] < matx[agent1min][agent2max]) {
                     cluster[0].add(agent1min);
                     agentClust[agent1min] = -1;
@@ -318,7 +326,6 @@ public class Main {
                     nbAgent -= 1;
                 }
             }
-            
         }
 
 //        System.out.println("");
@@ -329,7 +336,6 @@ public class Main {
 //
 //        }
 //        System.out.println("");
-
         while (testAgentClust(agentClust)) {
             for (int i = 0; i < agentClust.length; i++) {
                 if (agentClust[i] != -1) {
@@ -349,14 +355,15 @@ public class Main {
             }
         }
 
-        System.out.println("");
+//        System.out.println("");
 //        System.out.println("agentClust : " + Arrays.toString(agentClust));
 //        System.out.println("");
-        for (List<Integer> cluster1 : cluster) {
-            System.out.println(cluster1);
-
-        }
-        System.out.println("");
+//        for (List<Integer> cluster1 : cluster) {
+//            System.out.println(cluster1);
+//
+//        }
+//        System.out.println("");
+        averageDistanceBelieves(cluster, croyance);
 
     }
 
@@ -502,15 +509,63 @@ public class Main {
     }
 
     /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double[][] genereTestAlea(int nbAgent, int nbCroyance) {
+        double[][] listValeur = new double[nbAgent][nbCroyance];
+        for (int i = 0; i < listValeur.length; i++) {
+            for (int j = 0; j < listValeur[i].length; j++) {
+                listValeur[i][j] = Math.random();
+            }
+        }
+        return listValeur;
+    }
+
+    /**
+     *
+     * @param nbAgent
+     * @return
+     */
+    public static String[] genereListAgent(int nbAgent) {
+        String[] listOfAgent = new String[nbAgent];
+
+        for (int i = 0; i < listOfAgent.length; i++) {
+            listOfAgent[i] = "Agent_" + i;
+        }
+        return listOfAgent;
+    }
+
+    /**
+     *
+     * @param nbCroyance
+     * @return
+     */
+    public static String[] genereListCroyance(int nbCroyance) {
+        String[] listDeCroyance = new String[nbCroyance];
+
+        for (int i = 0; i < listDeCroyance.length; i++) {
+            listDeCroyance[i] = "Croyance_" + i;
+        }
+        return listDeCroyance;
+    }
+
+    /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+
+        GenereAlea genereAlea = new GenereAlea(10,5);
+        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
+
     }
 }
