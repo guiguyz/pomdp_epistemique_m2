@@ -16,7 +16,6 @@ public class Main {
 
     static Map<Integer, Map<Integer, Double>> mapAgentsMax = new HashMap<>();
     static Map<Integer, Map<Integer, Double>> mapAgentsMin = new HashMap<>();
-//    static ArrayList<Double> arrayAgentsMin = new ArrayList<>();
     static List<List<Integer>> clusterList = new ArrayList<List<Integer>>();
 
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
@@ -184,7 +183,7 @@ public class Main {
      *
      * @param croyance
      */
-    public static void averageDistanceBelieves(List<Integer>[] cluster, double[][] croyance) {
+    public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance) {
         
         double[] val = new double[croyance[0].length] ;
 
@@ -220,11 +219,11 @@ public class Main {
      * @param mat
      * @param croyance
      */
-    public static void initCluster(double[][] mat, double[][] croyance) {
+    public static void initCluster(double[][] mat, double[][] croyance, String[] listDeCroyance) {
 
         minMaxAgentsBelieves(mat);
 
-        miseAJourCluster(mat, croyance);
+        miseAJourCluster(mat, croyance, listDeCroyance);
 
     }
 
@@ -233,7 +232,7 @@ public class Main {
      * @param matx
      * @param croyance
      */
-    public static void miseAJourCluster(double[][] matx, double[][] croyance) {
+    public static void miseAJourCluster(double[][] matx, double[][] croyance, String[] listDeCroyance) {
 
         int nbAgent = matx[0].length;
         int nbCroyance = croyance[0].length;
@@ -363,7 +362,7 @@ public class Main {
 //
 //        }
 //        System.out.println("");
-        averageDistanceBelieves(cluster, croyance);
+        nomCluster(cluster, croyance, listDeCroyance);
 
     }
 
@@ -465,7 +464,7 @@ public class Main {
 
         System.out.println("");
         System.out.println("Cluster Battacharia : ");
-        initCluster(resBa, listValues);
+        initCluster(resBa, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
         System.out.println("Liste min ");
@@ -482,7 +481,7 @@ public class Main {
 
         System.out.println("");
         System.out.println("Cluster Hellinger : ");
-        initCluster(resHe, listValues);
+        initCluster(resHe, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
         System.out.println("Liste min ");
@@ -499,7 +498,7 @@ public class Main {
 
         System.out.println("");
         System.out.println("Cluster divergence de KBL : ");
-        initCluster(resK, listValues);
+        initCluster(resK, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
         System.out.println("Liste min ");
@@ -558,14 +557,14 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
 //        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 
-        GenereAlea genereAlea = new GenereAlea(5,2);
-        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
+//        GenereAlea genereAlea = new GenereAlea(3,2);
+//        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
 
     }
 }

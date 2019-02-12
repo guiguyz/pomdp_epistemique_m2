@@ -35,8 +35,15 @@ public class GenereAlea {
     public static double[][] genereTestAlea(int nbAgent, int nbCroyance) {
         listValeur = new double[nbAgent][nbCroyance];
         for (double[] listValeur1 : listValeur) {
+            double val = 0;
             for (int j = 0; j < listValeur1.length; j++) {
-                listValeur1[j] = Math.random();
+                double rand=Math.random();
+                listValeur1[j] = rand;
+                val+=rand;
+            }
+//            System.out.println(val);
+            for (int j = 0; j < listValeur1.length; j++) {
+//                listValeur1[j] = listValeur1[j]/val;
             }
         }
         return listValeur;
