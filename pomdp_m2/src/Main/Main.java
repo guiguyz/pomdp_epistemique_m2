@@ -32,6 +32,14 @@ public class Main {
     static String[] listOfFeatures3 = {"C1", "C2", "C3"};
     static double[][] listOfValue3 = {{0.98, 0.01, 0.01}, {0.01, 0.98, 0.01}, {0.01, 0.01, 0.98}, {0.34, 0.33, 0.33}, {0.33, 0.34, 0.33}, {0.33, 0.33, 0.34}, {0.25, 0.5, 0.25}};
 
+    static String[] listOfAgent4 = {"Agent0", "Agent1", "Agent2", "Agent3"};
+    static String[] listOfFeatures4 = {"C1", "C2", "C3"};
+    static double[][] listOfValue4 = {{1, 0, 0}, {0.34, 0.33, 0.33}, {0.33, 0.34, 0.33}, {0.33, 0.33, 0.34}};
+
+    static String[] listOfAgent5 = {"Agent0", "Agent1", "Agent2"};
+    static String[] listOfFeatures5 = {"C1", "C2", "C3"};
+    static double[][] listOfValue5 = {{0.34, 0.33, 0.33}, {0.33, 0.34, 0.33}, {0.33, 0.33, 0.34}};
+
     /**
      *
      * @param p
@@ -197,13 +205,13 @@ public class Main {
                     for (int k = 0; k < croyance.length; k++) {
                         for (int l = 0; l < croyance[k].length; l++) {
 //                            System.out.println(cluster[i].get(i));
-                            val[l] += croyance[cluster[i].get(i)][l];
+//                            val[l] += croyance[cluster[i].get(i)][l];
                         }
                     }
                 }
             }
         }
-        System.out.println(Arrays.toString(val));
+//        System.out.println(Arrays.toString(val));
 
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
@@ -346,14 +354,14 @@ public class Main {
 //
 //        }
 //        System.out.println("");
+
         while (testAgentClust(agentClust)) {
             for (int i = 0; i < agentClust.length; i++) {
                 if (agentClust[i] != -1) {
                     int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
                     for (List<Integer> cluster1 : cluster) {
                         for (int k = 0; k < cluster1.size(); k++) {
-//                            System.out.println(agentClust[i] + " en min avec " + agentMinJ + " == " + cluster1.get(k) + " dans un cluster alors ");
-//                            System.out.println(agentMinJ == cluster1.get(k));
+                            System.out.println(agentClust[i] + " en min avec " + agentMinJ + " == " + cluster1.get(k) + " dans un cluster alors ");
                             if (agentMinJ == cluster1.get(k)) {
                                 cluster1.add(agentClust[i]);
                                 agentClust[i] = -1;
@@ -373,7 +381,12 @@ public class Main {
 //
 //        }
 //        System.out.println("");
-        nomCluster(cluster, croyance, listDeCroyance);
+//        nomCluster(cluster, croyance, listDeCroyance);
+        for (List<Integer> cluster1 : cluster) {
+            System.out.println(cluster1);
+
+        }
+        System.out.println("");
 
     }
 
@@ -571,10 +584,12 @@ public class Main {
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
-//        GenereAlea genereAlea = new GenereAlea(3,2);
+//        GenereAlea genereAlea = new GenereAlea(7, 10);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
