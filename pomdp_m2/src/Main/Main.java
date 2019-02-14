@@ -204,7 +204,6 @@ public class Main {
                 for (int j = 0; j < cluster[i].size(); j++) {
                     for (int k = 0; k < croyance.length; k++) {
                         for (int l = 0; l < croyance[k].length; l++) {
-//                            System.out.println(cluster[i].get(j));
                             val[i][l] += croyance[cluster[i].get(j)][l];
                         }
                     }
