@@ -83,8 +83,8 @@ public class Main {
     public static double divergenceKBL(double[] p, double[] q) {
         double sum = 0;
         for (int i = 0; i < q.length; i++) {
-            if(q[i]!=0){
-                sum += p[i] * Math.log(p[i] / q[i]);                
+            if (q[i] != 0) {
+                sum += p[i] * Math.log(p[i] / q[i]);
             }
         }
         return Math.abs(sum);
@@ -197,29 +197,42 @@ public class Main {
      */
     public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance) {
 
-        double[][] val = new double[cluster.length][croyance[0].length];
+        double[][] valCluster = new double[cluster.length][croyance[0].length];
 
         for (int i = 0; i < cluster.length; i++) {
             if (!cluster[i].isEmpty()) {
                 for (int j = 0; j < cluster[i].size(); j++) {
-                    for (int k = 0; k < croyance.length; k++) {
-                        for (int l = 0; l < croyance[k].length; l++) {
-                            val[i][l] += croyance[cluster[i].get(j)][l];
-                        }
+                    for (int l = 0; l < croyance[cluster[i].get(j)].length; l++) {
+                        valCluster[i][l] += croyance[cluster[i].get(j)][l];
                     }
                 }
             }
         }
-//        System.out.println(Arrays.toString(val));
+        
+        System.out.println("");
         System.out.println("Name");
-        for (int i = 0; i < val.length; i++) {
-            System.out.println(Arrays.toString(val[i]));
-            
-        }
-        System.out.println("Cluster");
-        for (List<Integer> cluster1 : cluster) {
-            System.out.println(cluster1);
+        double max = Double.NEGATIVE_INFINITY;
+        double tempMax = 0;
+        int[] indexList = new int[valCluster.length];
+        for (int i = 0; i < valCluster.length; i++) {
+            int maxIndex = -1;
+            for (int j = 0; j < valCluster[i].length; j++) {
+                tempMax=valCluster[i][j];
+                if (tempMax > max) {
+                    max = tempMax;
+                    maxIndex = i;
+                }
+                indexList[i]=maxIndex;
+            }
 
+            System.out.println(Arrays.toString(valCluster[i])+" "+indexList[i]);
+
+        }
+        System.out.println("");
+        System.out.println("Cluster");
+        for (int i = 0; i < cluster.length; i++) {
+            System.out.println(cluster[i]+" "+listDeCroyance[indexList[i]]);//
+            
         }
         System.out.println("");
 
@@ -324,14 +337,14 @@ public class Main {
 //            nbAgent -= 1;
 //            System.out.println(agent1min+" "+cluster[1]);
         } else {
-            if ( nbCroyance > 2 ) {
-                if(!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))){
+            if (nbCroyance > 2) {
+                if (!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))) {
                     cluster[2].add(agent2min);
-                    agentClust[agent2min] = -1;                    
+                    agentClust[agent2min] = -1;
                 }
-                if(!(cluster[0].contains(agent1min)) && !(cluster[1].contains(agent1min))){
+                if (!(cluster[0].contains(agent1min)) && !(cluster[1].contains(agent1min))) {
                     cluster[2].add(agent1min);
-                    agentClust[agent1min] = -1;                    
+                    agentClust[agent1min] = -1;
                 }
 //                System.out.println(agent1min+" "+agent2min);
 //                nbAgent -= 2;
@@ -371,7 +384,6 @@ public class Main {
 //
 //        }
 //        System.out.println("");
-
         while (testAgentClust(agentClust)) {
             for (int i = 0; i < agentClust.length; i++) {
                 if (agentClust[i] != -1) {
