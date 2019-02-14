@@ -208,31 +208,35 @@ public class Main {
                 }
             }
         }
-        
-        System.out.println("");
-        System.out.println("Name");
-        double max = Double.NEGATIVE_INFINITY;
-        double tempMax = 0;
-        int[] indexList = new int[valCluster.length];
+
+        int[] indexList = new int[cluster.length];
+        for (int i = 0; i < indexList.length; i++) {
+            indexList[i] = -1;
+        }
         for (int i = 0; i < valCluster.length; i++) {
             int maxIndex = -1;
-            for (int j = 0; j < valCluster[i].length; j++) {
-                tempMax=valCluster[i][j];
-                if (tempMax > max) {
-                    max = tempMax;
-                    maxIndex = i;
+            double max = Double.NEGATIVE_INFINITY;
+            if (!cluster[i].isEmpty()) {
+                for (int j = 0; j < valCluster[i].length; j++) {
+                    if (valCluster[i][j] > max) {
+                        max = valCluster[i][j];
+                        maxIndex = j;
+                    }
+                    indexList[i] = maxIndex;
                 }
-                indexList[i]=maxIndex;
+
             }
 
-            System.out.println(Arrays.toString(valCluster[i])+" "+indexList[i]);
-
         }
+
         System.out.println("");
-        System.out.println("Cluster");
         for (int i = 0; i < cluster.length; i++) {
-            System.out.println(cluster[i]+" "+listDeCroyance[indexList[i]]);//
-            
+            if (indexList[i] != -1) {
+                System.out.println(cluster[i] + " => " + listDeCroyance[indexList[i]]);
+            } else {
+                System.out.println(cluster[i]);
+            }
+
         }
         System.out.println("");
 
@@ -402,20 +406,13 @@ public class Main {
             }
         }
 
-//        System.out.println("");
-//        System.out.println("agentClust : " + Arrays.toString(agentClust));
-//        System.out.println("");
+        nomCluster(cluster, croyance, listDeCroyance);
+        
 //        for (List<Integer> cluster1 : cluster) {
 //            System.out.println(cluster1);
 //
 //        }
 //        System.out.println("");
-        nomCluster(cluster, croyance, listDeCroyance);
-        for (List<Integer> cluster1 : cluster) {
-            System.out.println(cluster1);
-
-        }
-        System.out.println("");
 
     }
 
@@ -561,64 +558,20 @@ public class Main {
     }
 
     /**
-     *
-     * @param nbAgent
-     * @param nbCroyance
-     * @return
-     */
-    public static double[][] genereTestAlea(int nbAgent, int nbCroyance) {
-        double[][] listValeur = new double[nbAgent][nbCroyance];
-        for (double[] listValeur1 : listValeur) {
-            for (int j = 0; j < listValeur1.length; j++) {
-                listValeur1[j] = Math.random();
-            }
-        }
-        return listValeur;
-    }
-
-    /**
-     *
-     * @param nbAgent
-     * @return
-     */
-    public static String[] genereListAgent(int nbAgent) {
-        String[] listOfAgent = new String[nbAgent];
-
-        for (int i = 0; i < listOfAgent.length; i++) {
-            listOfAgent[i] = "Agent_" + i;
-        }
-        return listOfAgent;
-    }
-
-    /**
-     *
-     * @param nbCroyance
-     * @return
-     */
-    public static String[] genereListCroyance(int nbCroyance) {
-        String[] listDeCroyance = new String[nbCroyance];
-
-        for (int i = 0; i < listDeCroyance.length; i++) {
-            listDeCroyance[i] = "Croyance_" + i;
-        }
-        return listDeCroyance;
-    }
-
-    /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
-
-//        GenereAlea genereAlea = new GenereAlea(7, 10);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+        
+//        GenereAlea genereAlea = new GenereAlea(10, 10);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }

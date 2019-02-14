@@ -35,21 +35,14 @@ public class GenereAlea {
         listValeur = new double[nbAgent][nbCroyance];
         for (double[] listValeur1 : listValeur) {
             double val = 0;
-//            double un =1/nbCroyance;
             for (int j = 0; j < listValeur1.length; j++) {
                 double rand=Math.random();
                 listValeur1[j] = rand;
                 val+=rand;
             }
-//            System.out.println(val);
             for (int j = 0; j < listValeur1.length; j++) {
                 listValeur1[j] = listValeur1[j]/val;
             }
-            double test=0;
-            for (int j = 0; j < listValeur1.length; j++) {
-                test+=listValeur1[j] ;
-            }
-            System.out.println(test);
         }
         return listValeur;
     }
