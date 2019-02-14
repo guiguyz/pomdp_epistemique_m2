@@ -197,22 +197,27 @@ public class Main {
      */
     public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance) {
 
-        double[] val = new double[croyance[0].length];
+        double[][] val = new double[cluster.length][croyance[0].length];
 
         for (int i = 0; i < cluster.length; i++) {
             if (!cluster[i].isEmpty()) {
-                for (int j = 0; j < cluster[i].size(); i++) {
+                for (int j = 0; j < cluster[i].size(); j++) {
                     for (int k = 0; k < croyance.length; k++) {
                         for (int l = 0; l < croyance[k].length; l++) {
-//                            System.out.println(cluster[i].get(i));
-//                            val[l] += croyance[cluster[i].get(i)][l];
+//                            System.out.println(cluster[i].get(j));
+                            val[i][l] += croyance[cluster[i].get(j)][l];
                         }
                     }
                 }
             }
         }
 //        System.out.println(Arrays.toString(val));
-
+        System.out.println("Name");
+        for (int i = 0; i < val.length; i++) {
+            System.out.println(Arrays.toString(val[i]));
+            
+        }
+        System.out.println("Cluster");
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
@@ -394,7 +399,7 @@ public class Main {
 //
 //        }
 //        System.out.println("");
-//        nomCluster(cluster, croyance, listDeCroyance);
+        nomCluster(cluster, croyance, listDeCroyance);
         for (List<Integer> cluster1 : cluster) {
             System.out.println(cluster1);
 
@@ -595,12 +600,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
 //        GenereAlea genereAlea = new GenereAlea(7, 10);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
