@@ -45,11 +45,11 @@ public class GenereAlea {
             for (int j = 0; j < listValeur1.length; j++) {
                 listValeur1[j] = listValeur1[j]/val;
             }
-//            double test=0;
-//            for (int j = 0; j < listValeur1.length; j++) {
-//                test+=listValeur1[j] ;
-//            }
-//            System.out.println(test);
+            double test=0;
+            for (int j = 0; j < listValeur1.length; j++) {
+                test+=listValeur1[j] ;
+            }
+            System.out.println(test);
         }
         return listValeur;
     }
