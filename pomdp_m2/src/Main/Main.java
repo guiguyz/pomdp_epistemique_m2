@@ -38,7 +38,7 @@ public class Main {
 
     static String[] listOfAgent5 = {"Agent0", "Agent1", "Agent2"};
     static String[] listOfFeatures5 = {"C1", "C2", "C3"};
-    static double[][] listOfValue5 = {{0.33, 0.33, 0.33}, {0.33, 0.33, 0.33}, {0.33, 0.33, 0.33}};
+    static double[][] listOfValue5 = {{0.34, 0.33, 0.33}, {0.33, 0.34, 0.33}, {0.33, 0.33, 0.34}};
 
     /**
      *
@@ -83,7 +83,9 @@ public class Main {
     public static double divergenceKBL(double[] p, double[] q) {
         double sum = 0;
         for (int i = 0; i < q.length; i++) {
-            sum += p[i] * Math.log(p[i] / q[i]);
+            if(q[i]!=0){
+                sum += p[i] * Math.log(p[i] / q[i]);                
+            }
         }
         return Math.abs(sum);
     }
@@ -109,9 +111,7 @@ public class Main {
                     if ("K".equals(typeDistance)) {
                         distance[i][j] = divergenceKBL(liste[i], liste[j]);
                     }
-
                 }
-
             }
         }
         return distance;
@@ -263,7 +263,6 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
-        System.out.println("OK");
 
         int[] agentClust = new int[nbAgent];
         for (int i = 0; i < nbAgent; i++) {
@@ -304,22 +303,22 @@ public class Main {
             cluster[0].add(agent2min);
             agentClust[agent2min] = -1;
 //            nbAgent -= 1;
-            System.out.println(agent2min+" "+cluster[0]);
+//            System.out.println(agent2min+" "+cluster[0]);
         } else if (agent2min == agent1max && !(cluster[1].contains(agent1min))) {
             cluster[0].add(agent1min);
             agentClust[agent1min] = -1;
 //            nbAgent -= 1;
-            System.out.println(agent1min+" "+cluster[0]);
+//            System.out.println(agent1min+" "+cluster[0]);
         } else if (agent1min == agent2max && !(cluster[0].contains(agent2min))) {
             cluster[1].add(agent2min);
             agentClust[agent2min] = -1;
 //            nbAgent -= 1;
-            System.out.println(agent2min+" "+cluster[1]);
+//            System.out.println(agent2min+" "+cluster[1]);
         } else if (agent2min == agent2max && !(cluster[0].contains(agent1min))) {
             cluster[1].add(agent1min);
             agentClust[agent1min] = -1;
 //            nbAgent -= 1;
-            System.out.println(agent1min+" "+cluster[1]);
+//            System.out.println(agent1min+" "+cluster[1]);
         } else {
             if ( nbCroyance > 2 ) {
                 if(!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))){
@@ -330,32 +329,32 @@ public class Main {
                     cluster[2].add(agent1min);
                     agentClust[agent1min] = -1;                    
                 }
-                System.out.println(agent1min+" "+agent2min);
+//                System.out.println(agent1min+" "+agent2min);
 //                nbAgent -= 2;
             } else {
                 if (matx[agent1min][agent1max] < matx[agent1min][agent2max] && !(cluster[1].contains(agent1min))) {
                     cluster[0].add(agent1min);
                     agentClust[agent1min] = -1;
 //                    nbAgent -= 1;
-                    System.out.println(agent1min);
+//                    System.out.println(agent1min);
                 }
                 if (matx[agent1min][agent1max] > matx[agent1min][agent2max] && !(cluster[0].contains(agent1min))) {
                     cluster[1].add(agent1min);
                     agentClust[agent1min] = -1;
 //                    nbAgent -= 1;
-                    System.out.println(agent1min);
+//                    System.out.println(agent1min);
                 }
                 if (matx[agent2min][agent1max] < matx[agent2min][agent2max] && !(cluster[1].contains(agent2min))) {
                     cluster[0].add(agent2min);
                     agentClust[agent2min] = -1;
 //                    nbAgent -= 1;
-                    System.out.println(agent2min);
+//                    System.out.println(agent2min);
                 }
                 if (matx[agent2min][agent1max] > matx[agent2min][agent2max] && !(cluster[0].contains(agent2min))) {
                     cluster[1].add(agent2min);
                     agentClust[agent2min] = -1;
 //                    nbAgent -= 1;
-                    System.out.println(agent2min);
+//                    System.out.println(agent2min);
                 }
             }
         }
@@ -595,15 +594,15 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
-        GenereAlea genereAlea = new GenereAlea(7, 10);
-        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
+//        GenereAlea genereAlea = new GenereAlea(7, 10);
+//        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
