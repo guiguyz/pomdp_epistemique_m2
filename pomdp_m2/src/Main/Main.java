@@ -77,6 +77,19 @@ public class Main {
     /**
      *
      * @param p
+     * @return
+     */
+    public static double entropieShannon(double[] p) {
+        double sum = 0;
+        for (int i = 0; i < p.length; i++) {
+            sum += -(p[i] * Math.log(p[i]));
+        }
+        return Math.abs(sum);
+    }
+
+    /**
+     *
+     * @param p
      * @param q
      * @return
      */
@@ -112,9 +125,30 @@ public class Main {
                         distance[i][j] = divergenceKBL(liste[i], liste[j]);
                     }
                 }
+                if ("S".equals(typeDistance)) {
+
+                }
             }
         }
         return distance;
+    }
+
+    private static double[] resShannon(double[][] liste) {
+//        int nbCroyance = liste[0].length;
+        double[] resSha = new double[liste[0].length];
+        double[] croyanceAgent = new double[liste.length];
+        double sum = 0;
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < liste[i].length; j++) {
+                sum += -(liste[i][j] * Math.log(liste[i][j]));
+//                croyanceAgent[i]=liste[j][j];
+//                resSha[i]=entropieShannon(liste[i][j]);
+//                System.out.println(liste[i][j]);
+
+            }
+            croyanceAgent[i]+=sum;
+        }
+        return croyanceAgent;
     }
 
     /**
@@ -407,13 +441,12 @@ public class Main {
         }
 
         nomCluster(cluster, croyance, listDeCroyance);
-        
+
 //        for (List<Integer> cluster1 : cluster) {
 //            System.out.println(cluster1);
 //
 //        }
 //        System.out.println("");
-
     }
 
     public static boolean testAgentClust(int[] agentClust) {
@@ -513,6 +546,10 @@ public class Main {
         }
 
         System.out.println("");
+        double shaRes[] = resShannon(listValues);
+        System.out.println("SHANNON : "+Arrays.toString(shaRes));
+
+        System.out.println("");
         System.out.println("Cluster Battacharia : ");
         initCluster(resBa, listValues, listFeatures);
         System.out.println("Liste max ");
@@ -564,13 +601,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
-        
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+
 //        GenereAlea genereAlea = new GenereAlea(10, 10);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
