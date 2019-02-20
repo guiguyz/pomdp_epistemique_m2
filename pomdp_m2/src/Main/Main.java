@@ -611,14 +611,14 @@ public class Main {
 
         System.out.println("");
         double resK[][] = matriceDistanceAgents(listValues, "K");
-        System.out.println("Matrice de divergence de KBL " + Arrays.toString(listFeatures) + " :");
+        System.out.println("Matrice de divergence de Kullback-Leibler " + Arrays.toString(listFeatures) + " :");
         System.out.println(Arrays.toString(listAgent));
         for (double[] agent : resK) {
             System.out.println(Arrays.toString(agent));
         }
 
         System.out.println("");
-        System.out.println("Cluster divergence de KBL : ");
+        System.out.println("Cluster divergence de Kullback-Leibler : ");
         initCluster(resK, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
@@ -676,7 +676,7 @@ public class Main {
         affichage(listOfAgent4, listOfFeatures4, listOfValue4);
         affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
-//        GenereAlea genereAlea = new GenereAlea(5, 4);
-//        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
+        GenereAlea genereAlea = new GenereAlea(5, 4);
+        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
