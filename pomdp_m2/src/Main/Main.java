@@ -105,6 +105,38 @@ public class Main {
 
     /**
      *
+     * @param p
+     * @param q
+     * @return
+     */
+    public static double itakuraSaito(double[] p, double[] q) {
+        double sum = 0;
+        for (int i = 0; i < q.length; i++) {
+            if (q[i] != 0) {
+                sum += (p[i] / q[i] - Math.log(p[i] / q[i]) - 1);
+            }
+        }
+        return Math.abs(sum);
+    }
+
+    /**
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public static double distanceMahalanobis(double[] p, double[] q) {
+        double sum = 0;
+        for (int i = 0; i < p.length; i++) {
+            for (int j = 0; j < q.length; j++) {
+                sum += ((p[i] - q[i]) * (p[j] - q[j]));
+            }
+        }
+        return Math.abs(sum / 2);
+    }
+
+    /**
+     *
      * @param liste
      * @param typeDistance
      * @return
@@ -124,9 +156,12 @@ public class Main {
                     if ("K".equals(typeDistance)) {
                         distance[i][j] = divergenceKBL(liste[i], liste[j]);
                     }
-                }
-                if ("S".equals(typeDistance)) {
-
+                    if ("I".equals(typeDistance)) {
+                        distance[i][j] = itakuraSaito(liste[i], liste[j]);
+                    }
+                    if ("M".equals(typeDistance)) {
+                        distance[i][j] = distanceMahalanobis(liste[i], liste[j]);
+                    }
                 }
             }
         }
@@ -146,7 +181,7 @@ public class Main {
 //                System.out.println(liste[i][j]);
 
             }
-            croyanceAgent[i]+=sum;
+            croyanceAgent[i] += sum;
         }
         return croyanceAgent;
     }
@@ -233,11 +268,15 @@ public class Main {
 
         double[][] valCluster = new double[cluster.length][croyance[0].length];
 
+        double[] sommeVal = new double[croyance[0].length];
+
         for (int i = 0; i < cluster.length; i++) {
             if (!cluster[i].isEmpty()) {
                 for (int j = 0; j < cluster[i].size(); j++) {
                     for (int l = 0; l < croyance[cluster[i].get(j)].length; l++) {
                         valCluster[i][l] += croyance[cluster[i].get(j)][l];
+                        sommeVal[i] += croyance[cluster[i].get(j)][l];
+
                     }
                 }
             }
@@ -258,22 +297,19 @@ public class Main {
                     }
                     indexList[i] = maxIndex;
                 }
-
             }
-
         }
 
         System.out.println("");
         for (int i = 0; i < cluster.length; i++) {
+            sommeVal[i]=sommeVal[i]/cluster[i].size();
             if (indexList[i] != -1) {
-                System.out.println(cluster[i] + " => " + listDeCroyance[indexList[i]]);
+                System.out.println(cluster[i] + " cluster de croyance " + listDeCroyance[indexList[i]] + " de valeur moyenne " + sommeVal[i]);
             } else {
                 System.out.println(cluster[i]);
             }
-
         }
         System.out.println("");
-
     }
 
     /**
@@ -545,9 +581,9 @@ public class Main {
             System.out.println(Arrays.toString(agent));
         }
 
-        System.out.println("");
-        double shaRes[] = resShannon(listValues);
-        System.out.println("SHANNON : "+Arrays.toString(shaRes));
+//        System.out.println("");
+//        double shaRes[] = resShannon(listValues);
+//        System.out.println("SHANNON : " + Arrays.toString(shaRes));
 
         System.out.println("");
         System.out.println("Cluster Battacharia : ");
@@ -592,6 +628,39 @@ public class Main {
         System.out.println(mapAgentsMin.entrySet());
         System.out.println("");
 
+        System.out.println("");
+        double resI[][] = matriceDistanceAgents(listValues, "I");
+        System.out.println("Matrice de distance(divergence) de Itakuro-Saito " + Arrays.toString(listFeatures) + " :");
+        System.out.println(Arrays.toString(listAgent));
+        for (double[] agent : resI) {
+            System.out.println(Arrays.toString(agent));
+        }
+
+        System.out.println("");
+        System.out.println("Cluster distance(divergence) de Itakuro-Saito : ");
+        initCluster(resI, listValues, listFeatures);
+        System.out.println("Liste max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println("Liste min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+
+//        System.out.println("");
+//        double resM[][] = matriceDistanceAgents(listValues, "M");
+//        System.out.println("Matrice de distance de Mahalanobis " + Arrays.toString(listFeatures) + " :");
+//        System.out.println(Arrays.toString(listAgent));
+//        for (double[] agent : resM) {
+//            System.out.println(Arrays.toString(agent));
+//        }
+//
+//        System.out.println("");
+//        System.out.println("Cluster distance de Mahalanobis : ");
+//        initCluster(resM, listValues, listFeatures);
+//        System.out.println("Liste max ");
+//        System.out.println(mapAgentsMax.entrySet());
+//        System.out.println("Liste min ");
+//        System.out.println(mapAgentsMin.entrySet());
+//        System.out.println("");
     }
 
     /**
@@ -608,7 +677,7 @@ public class Main {
 //        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
 //        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
-//        GenereAlea genereAlea = new GenereAlea(10, 10);
+//        GenereAlea genereAlea = new GenereAlea(5, 4);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
