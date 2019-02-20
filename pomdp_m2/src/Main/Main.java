@@ -129,7 +129,9 @@ public class Main {
         double sum = 0;
         for (int i = 0; i < p.length; i++) {
             for (int j = 0; j < q.length; j++) {
-                sum += ((p[i] - q[i]) * (p[j] - q[j]));
+                if(i!=j){
+                    sum += ((p[i] - q[i]) * (p[j] - q[j]));
+                }
             }
         }
         return Math.abs(sum / 2);
@@ -581,10 +583,6 @@ public class Main {
             System.out.println(Arrays.toString(agent));
         }
 
-//        System.out.println("");
-//        double shaRes[] = resShannon(listValues);
-//        System.out.println("SHANNON : " + Arrays.toString(shaRes));
-
         System.out.println("");
         System.out.println("Cluster Battacharia : ");
         initCluster(resBa, listValues, listFeatures);
@@ -630,14 +628,14 @@ public class Main {
 
         System.out.println("");
         double resI[][] = matriceDistanceAgents(listValues, "I");
-        System.out.println("Matrice de distance(divergence) de Itakuro-Saito " + Arrays.toString(listFeatures) + " :");
+        System.out.println("Matrice de distance de Itakuro-Saito " + Arrays.toString(listFeatures) + " :");
         System.out.println(Arrays.toString(listAgent));
         for (double[] agent : resI) {
             System.out.println(Arrays.toString(agent));
         }
 
         System.out.println("");
-        System.out.println("Cluster distance(divergence) de Itakuro-Saito : ");
+        System.out.println("Cluster de distance de Itakuro-Saito : ");
         initCluster(resI, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
@@ -645,22 +643,23 @@ public class Main {
         System.out.println(mapAgentsMin.entrySet());
         System.out.println("");
 
-//        System.out.println("");
-//        double resM[][] = matriceDistanceAgents(listValues, "M");
-//        System.out.println("Matrice de distance de Mahalanobis " + Arrays.toString(listFeatures) + " :");
-//        System.out.println(Arrays.toString(listAgent));
-//        for (double[] agent : resM) {
-//            System.out.println(Arrays.toString(agent));
-//        }
-//
-//        System.out.println("");
-//        System.out.println("Cluster distance de Mahalanobis : ");
-//        initCluster(resM, listValues, listFeatures);
-//        System.out.println("Liste max ");
-//        System.out.println(mapAgentsMax.entrySet());
-//        System.out.println("Liste min ");
-//        System.out.println(mapAgentsMin.entrySet());
-//        System.out.println("");
+        System.out.println("");
+        double resM[][] = matriceDistanceAgents(listValues, "M");
+        System.out.println("Matrice de distance de Mahalanobis " + Arrays.toString(listFeatures) + " :");
+        System.out.println(Arrays.toString(listAgent));
+        for (double[] agent : resM) {
+            System.out.println(Arrays.toString(agent));
+        }
+
+        System.out.println("");
+        System.out.println("Cluster distance de Mahalanobis : ");
+        initCluster(resM, listValues, listFeatures);
+        System.out.println("Liste max ");
+        System.out.println(mapAgentsMax.entrySet());
+        System.out.println("Liste min ");
+        System.out.println(mapAgentsMin.entrySet());
+        System.out.println("");
+        
     }
 
     /**
@@ -670,12 +669,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 
 //        GenereAlea genereAlea = new GenereAlea(5, 4);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
