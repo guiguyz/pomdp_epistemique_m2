@@ -44,9 +44,17 @@ public class Main {
     static String[] listOfFeatures6 = {"C1", "C2"};
     static double[][] listOfValue6 = {{0.49, 0.51}, {0.51, 0.49}, {0.5, 0.5}};
     
-    static String[] listOfAgent7 = {"Robot0", "Robot1", "Robot2", "Robot3"};
-    static String[] listOfFeatures7 = {"Porte_ouverte", "Porte_fermée"};
-    static double[][] listOfValue7 = {{0.99, 0.01}, {0.75, 0.25}, {0.25, 0.75}, {0.5, 0.5}};
+    static String[] listOfAgent71 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures71 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue71 = {{0.99, 0.01}, {0.75, 0.25}, {0.25, 0.75}, {0.5, 0.5}};
+    
+    static String[] listOfAgent72 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures72 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue72 = {{0.99, 0.01}, {0.95, 0.05}, {0.49, 0.51}, {0.49, 0.51}};
+    
+    static String[] listOfAgent73 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures73 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue73 = {{0.99, 0.01}, {0.97, 0.03}, {0.95, 0.05}, {0.89, 0.11}};
 
     /**
      *
@@ -666,7 +674,9 @@ public class Main {
 //        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
 //        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 //        affichage(listOfAgent6, listOfFeatures6, listOfValue6);
-        affichage(listOfAgent7, listOfFeatures7, listOfValue7);
+        affichage(listOfAgent71, listOfFeatures71, listOfValue71);
+        affichage(listOfAgent72, listOfFeatures72, listOfValue72);
+        affichage(listOfAgent73, listOfFeatures73, listOfValue73);
 
 //        GenereAlea genereAlea = new GenereAlea(5, 2);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
