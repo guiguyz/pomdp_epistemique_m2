@@ -43,6 +43,10 @@ public class Main {
     static String[] listOfAgent6 = {"Agent0", "Agent1", "Agent2"};
     static String[] listOfFeatures6 = {"C1", "C2"};
     static double[][] listOfValue6 = {{0.49, 0.51}, {0.51, 0.49}, {0.5, 0.5}};
+    
+    static String[] listOfAgent7 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures7 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue7 = {{0.99, 0.01}, {0.75, 0.25}, {0.25, 0.75}, {0.5, 0.5}};
 
     /**
      *
@@ -87,7 +91,7 @@ public class Main {
         double sum = 0;
         for (int i = 0; i < p.length; i++) {
             if (p[i] != 0) {
-                sum += (p[i] * Math.log(1 / p[i]));
+                sum += (p[i] * Math.log(1/p[i]));
             }
         }
         return sum;
@@ -330,7 +334,7 @@ public class Main {
      *
      * @param mat
      */
-    public static void minMaxAgentsBelieves(double[][] mat) {
+    public static void minMaxAgentsCroyance(double[][] mat) {
         int nbAgent = mat.length;
         for (int i = 0; i < nbAgent; i++) {
             mapAgentsMax.put(i, getMax(mat[i], i));
@@ -358,7 +362,7 @@ public class Main {
      */
     public static void creationCluster(double[][] matx, double[][] croyance, String[] listDeCroyance) {
 
-        minMaxAgentsBelieves(matx);
+        minMaxAgentsCroyance(matx);
 
         int nbAgent = matx[0].length;
         int nbCroyance = croyance[0].length;
@@ -559,7 +563,7 @@ public class Main {
         System.out.println("Matrice de croyance :");
         System.out.println(Arrays.toString(listFeatures));
         for (int i = 0; i < listAgent.length; i++) {
-            System.out.println("Agent" + String.valueOf(i) + " " + Arrays.toString(listValues[i]));
+            System.out.println(listAgent[i] + " " + Arrays.toString(listValues[i]));//String.valueOf(i) + 
         }
         System.out.println("");
         double resBa[][] = matriceDistanceAgents(listValues, "B");
@@ -654,16 +658,17 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
-        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
-        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
-        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
-        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
-        affichage(listOfAgent6, listOfFeatures6, listOfValue6);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
+//        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
+//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+//        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
+//        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
+//        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
+//        affichage(listOfAgent6, listOfFeatures6, listOfValue6);
+        affichage(listOfAgent7, listOfFeatures7, listOfValue7);
 
-//        GenereAlea genereAlea = new GenereAlea(5, 5);
+//        GenereAlea genereAlea = new GenereAlea(5, 2);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
