@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package src;
 
 /**
+ * Classe GenereAlea pour generer des croyances aléatoires
  *
- * @author guy
+ * @author Guillaume Drouart 21009341
+ * @author Hazar Zaoui 21104595
  */
 public class GenereAlea {
 
@@ -17,6 +14,12 @@ public class GenereAlea {
     int nbAgent;
     int nbCroyance;
     
+    /**
+     * Constructeur
+     *
+     * @param nbAgent
+     * @param nbCroyance
+     */
     GenereAlea(int nbAgent, int nbCroyance) {
         this.nbAgent=nbAgent;
         this.nbCroyance=nbCroyance;
@@ -26,6 +29,7 @@ public class GenereAlea {
     }
     
     /**
+     * Generer les valeurs aléatoires des croyances
      *
      * @param nbAgent
      * @param nbCroyance
@@ -48,6 +52,7 @@ public class GenereAlea {
     }
 
     /**
+     * Generer la liste des agents
      *
      * @param nbAgent
      * @return
@@ -62,6 +67,7 @@ public class GenereAlea {
     }
 
     /**
+     * Generer la liste des croyances
      *
      * @param nbCroyance
      * @return

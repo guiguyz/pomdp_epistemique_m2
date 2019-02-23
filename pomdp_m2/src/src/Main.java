@@ -1,5 +1,6 @@
 package src;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Classe principale
  *
- * @author Guillaume Drouart
- * @author Hazar Zaoui
+ * @author Guillaume Drouart 21009341
+ * @author Hazar Zaoui 21104595
  */
 public class Main {
 
@@ -21,7 +23,7 @@ public class Main {
     static String[] listOfAgent1 = {"Agent0", "Agent1", "Agent2", "Agent3"};
     static String[] listOfFeatures1 = {"Civile", "Militaire"};
     static double[][] listOfValue11 = {{0.6, 0.4}, {0.4, 0.6}, {0.85, 0.15}, {0.75, 0.25}};
-    static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};//{0.8,0.2}
+    static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};
     static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.96, 0.04}};
 
     static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
@@ -61,6 +63,7 @@ public class Main {
     static double[][] listOfValue73 = {{0.99, 0.01}, {0.97, 0.03}, {0.95, 0.05}, {0.89, 0.11}};
 
     /**
+	 * Coefficient de Bhattacharyya
      *
      * @param p
      * @param q
@@ -75,6 +78,7 @@ public class Main {
     }
 
     /**
+	 * Distance de Battacharya
      *
      * @param p
      * @param q
@@ -85,6 +89,7 @@ public class Main {
     }
 
     /**
+	 * Distance de Hellinger
      *
      * @param p
      * @param q
@@ -95,6 +100,7 @@ public class Main {
     }
 
     /**
+	 * Entropie de shannon
      *
      * @param p
      * @return
@@ -110,6 +116,7 @@ public class Main {
     }
 
     /**
+	 * Divergence de Kullbak-Leibler
      *
      * @param p
      * @param q
@@ -126,6 +133,7 @@ public class Main {
     }
 
     /**
+	 * Distance de Itakura-Saito
      *
      * @param p
      * @param q
@@ -142,6 +150,7 @@ public class Main {
     }
 
     /**
+	 * Distance de Mahalanobis
      *
      * @param p
      * @param q
@@ -160,6 +169,7 @@ public class Main {
     }
 
     /**
+	 * Calcule les matrices de distances en fonction du parametre typeDistance
      *
      * @param liste
      * @param typeDistance
@@ -193,6 +203,7 @@ public class Main {
     }
 
     /**
+	 * Retourne la map de tout les agents j qui sont en max avec les agents i
      *
      * @param v
      * @param a
@@ -218,6 +229,7 @@ public class Main {
     }
 
     /**
+	 * Retourne la map de tout les agents j qui sont en min avec les agents i
      *
      * @param v
      * @param a
@@ -243,6 +255,7 @@ public class Main {
     }
 
     /**
+	 * Retourne l'agent j qui est en min avec un agent i
      *
      * @param v
      * @param a
@@ -267,7 +280,10 @@ public class Main {
     }
 
     /**
-     *
+     * Mettre le nom de la croyance correspondant au cluster
+	 * Indiquer la valeur moyenne correspondant au cluster
+	 * Calculer et indiqué l'entropie de shannon de la croyance correspondant au cluster
+	 *
      * @param cluster
      * @param croyance
      * @param listDeCroyance
@@ -343,7 +359,8 @@ public class Main {
     }
 
     /**
-     *
+     * Création des map d'agent en max et en min
+	 *
      * @param mat
      */
     public static void minMaxAgentsCroyance(double[][] mat) {
@@ -354,20 +371,10 @@ public class Main {
         }
     }
 
-    /**
-     *
-     * @param mat
-     * @param croyance
-     * @param listDeCroyance
-     */
-    public static void initCluster(double[][] mat, double[][] croyance, String[] listDeCroyance) {
-
-        creationCluster(mat, croyance, listDeCroyance);
-
-    }
 
     /**
-     *
+     * Création des clusters
+	 *
      * @param matx
      * @param croyance
      * @param listDeCroyance
@@ -463,15 +470,25 @@ public class Main {
             }
         }
 
+		// Tant qu'il reste des agents non clusterisé
         while (testAgentClust(agentClust)) {
+			// Pour chaque agents
             for (int i = 0; i < agentClust.length; i++) {
+				// Si l'agent i n'est pas clusterisé
                 if (agentClust[i] != -1) {
+					// On récupère l'agent j avec qui il est en min
                     int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
+					// Pour tout les groupes de cluster
                     for (List<Integer> cluster1 : cluster) {
+						// Pour chaque cluster
                         for (int k = 0; k < cluster1.size(); k++) {
+							// SI l'agent j est dans un cluster
                             if (agentMinJ == cluster1.get(k)) {
+								// On ajoute l'agent i avec lui
                                 cluster1.add(agentClust[i]);
+								// On indique que l'agent i est désormais clusterisé 
                                 agentClust[i] = -1;
+								// On stop la condition pour allez voir les autres agents
                                 break;
                             }
                         }
@@ -500,69 +517,7 @@ public class Main {
     }
 
     /**
-     *
-     * @param tableau
-     * @param index
-     * @return
-     */
-    public static double[][] supprimerIndiceMat(double[][] tableau, int index) {
-        int nRows = tableau.length;
-        int nColumns = tableau[0].length;
-
-        if (index >= nRows || index >= nColumns) {
-            // Return exception ?
-            return new double[0][0];
-        }
-
-        double[][] newTab = new double[nRows - 1][nColumns - 1];
-        int newTabRow = 0;
-        int newTabCol = 0;
-
-        for (int i = 0; i < nRows; ++i) {
-            if (i != index) {
-                for (int j = 0; j < nColumns; ++j) {
-                    if (j != index) {
-                        newTab[newTabRow][newTabCol] = tableau[i][j];
-                        ++newTabCol;
-                    }
-                }
-                ++newTabRow;
-                newTabCol = 0;
-            }
-        }
-        return newTab;
-    }
-
-    @FunctionalInterface
-    public interface InterfaceDistance {
-
-        double distance(double[] p, double[] q);
-    }
-
-    /**
-     *
-     * @param X
-     * @param distanceFun
-     * @param maxIter
-     * @param eps
-     * @param k
-     */
-    public void kmeans(double[][] X, InterfaceDistance distanceFun, int maxIter, double eps, int k) {
-        // distanceFun.distance(a, b);
-    }
-
-    /**
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public double euclidianDistance(double[] a, double[] b) {
-        // kmeans(X, (a, b) -> euclidianDistance(a, b), 1000, 1e-3)
-        return 0.;
-    }
-
-    /**
+	 * Affichage des résultats
      *
      * @param listAgent
      * @param listFeatures
