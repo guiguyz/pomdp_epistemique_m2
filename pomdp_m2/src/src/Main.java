@@ -1,8 +1,6 @@
 package src;
 
 import java.io.IOException;
-import static java.lang.Double.max;
-import static java.lang.Double.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,6 +32,11 @@ public class Main {
     static String[] listOfAgent21 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
     static String[] listOfFeatures21 = {"Rouge", "Vert", "Bleu", "Blanc"};
     static double[][] listOfValue21 = {{0.13, 0.01, 0.01, 0.85}, {0.01, 0.01, 0.03, 0.95}, {0.01, 0, 0, 0.99}, {0.04, 0, 0, 0.96}, {0.01, 0.01, 0.01, 0.97}};
+    
+    static String[] listOfAgent22 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9"};
+    static String[] listOfFeatures22 = {"Rouge", "Vert", "Bleu", "Blanc"};
+    static double[][] listOfValue22 = {{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.4, 0, 0, 0.6}};
 
     static String[] listOfAgent3 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent6"};
     static String[] listOfFeatures3 = {"C1", "C2", "C3"};
@@ -128,7 +131,6 @@ public class Main {
         return sum;
     }
 
-    
     /**
      * Entropie de shannon
      *
@@ -138,10 +140,11 @@ public class Main {
     public static double croyanceMoyenne(double[] p) {
         double sum = 0;
         for (int i = 0; i < p.length; i++) {
-                sum += p[i];
+            sum += p[i];
         }
         return sum;
     }
+
     /**
      * Divergence de Kullbak-Leibler
      *
@@ -307,7 +310,7 @@ public class Main {
     }
 
     /**
-     * Création des map d'agent en max et en min
+     * Création des map de valeur d'agents en max et en min entre eux
      *
      * @param mat
      */
@@ -328,6 +331,8 @@ public class Main {
      */
     public static void creationCluster(double[][] matx, double[][] croyance, String[] listDeCroyance) {
 
+        // On calcule les map de min et de max des agents
+        // pour une meilleur comprehension à l'affichage
         minMaxAgentsCroyance(matx);
 
         int nbAgent = matx[0].length;
@@ -344,7 +349,7 @@ public class Main {
 
         // On transpose la matrice des croyances
         // pour que les croyances soit sur les lignes
-        // afin de pouvoir calculer leur entropie
+        // afin de pouvoir calculer leur entropie et leur valeur moyenne
         double[][] resSha = new double[croyance[0].length][croyance.length];
         for (int i = 0; i < croyance.length; i++) {
             for (int j = 0; j < croyance[i].length; j++) {
@@ -355,30 +360,32 @@ public class Main {
         System.out.println("");
         double[] sommeMoyVal = new double[resSha.length];
         double[] resShannon = new double[resSha.length];
-        // Pour chaque croyance on calcule son entropie
         for (int i = 0; i < resSha.length; i++) {
+            // Pour chaque croyance on calcule son entropie
             resShannon[i] = entropieShannon(resSha[i]);
-            sommeMoyVal[i]= croyanceMoyenne(resSha[i]);
-            System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i]);
+            // Pour chaque croyance on calcule sa valeur moyenne
+            sommeMoyVal[i] = croyanceMoyenne(resSha[i]);
+            sommeMoyVal[i] /= nbAgent;
+            // On teste si le seuil d'une croyance est atteint
+            if (sommeMoyVal[i] > 0.9) {
+                seuilAtteint = true;
+            }
+            System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i] + " et de valeur moyenne " + sommeMoyVal[i]);
         }
 
+        // Pour tester si des agents sont dans des clusters
         int[] agentClust = new int[nbAgent];
         for (int i = 0; i < nbAgent; i++) {
             agentClust[i] = i;
         }
 
-
-        for (int i = 0; i < sommeMoyVal.length; i++) {
-            if(sommeMoyVal[i]/nbAgent>0.9){
-                seuilAtteint=true;
-            }
-        }
-        
+        // On crée les clusters sur le nombre de croyance
         List<Integer>[] cluster = new List[nbCroyance];
         for (int i = 0; i < nbCroyance; i++) {
             cluster[i] = new ArrayList<>();
         }
 
+        // On cherche les agents max et min
         for (int i = 0; i < matx.length; i++) {
             for (int j = 0; j < matx[i].length; j++) {
 
@@ -399,17 +406,23 @@ public class Main {
             }
         }
 
+        // Si le seuil est atteint alors 
+        // tous les agents sont dans le même cluster
         if (seuilAtteint) {
             for (int i = 0; i < nbAgent; i++) {
                 cluster[0].add(i);
+                // On indique que les agents i sont dans un cluster
                 agentClust[i] = -1;
             }
         } else {
-
+            // Sinon on applique la méthode voulu
+            // Les deux agents en max dans deux clusters différents
             cluster[0].add(agent1max);
             cluster[1].add(agent2max);
             agentClust[agent1max] = -1;
             agentClust[agent2max] = -1;
+            // On verifie si un ou les deux des autres agents qui sont en min
+            // soit en min avec un des agents max
             if (agent1min == agent1max && !(cluster[1].contains(agent2min))) {
                 cluster[0].add(agent2min);
                 agentClust[agent2min] = -1;
@@ -423,6 +436,8 @@ public class Main {
                 cluster[1].add(agent1min);
                 agentClust[agent1min] = -1;
             } else {
+                // Sinon on mets les deux agents min ensemble dans un cluster
+                // à part si le nombre de croyance est supérieur à 2
                 if (nbCroyance > 2) {
                     if (!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))) {
                         cluster[2].add(agent2min);
@@ -433,6 +448,9 @@ public class Main {
                         agentClust[agent1min] = -1;
                     }
                 } else {
+                    // Sinon le nombre de croyance est égale à 2
+                    // alors on cherche l'agent le plus proche
+                    // dans les clusters existant
                     if (matx[agent1min][agent1max] < matx[agent1min][agent2max] && !(cluster[1].contains(agent1min))) {
                         cluster[0].add(agent1min);
                         agentClust[agent1min] = -1;
@@ -493,6 +511,7 @@ public class Main {
      * @param cluster
      * @param croyance
      * @param listDeCroyance
+     * @param resShannon
      */
     public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance, double[] resShannon) {
 
@@ -500,21 +519,27 @@ public class Main {
 
         double[] sommeMoyValCluster = new double[croyance[0].length];
 
+        
+        // Pour chaque cluster
         for (int i = 0; i < cluster.length; i++) {
             if (!cluster[i].isEmpty()) {
                 for (int j = 0; j < cluster[i].size(); j++) {
+                    // On calcule la valeur moyenne des croyances  
+                    // de chaque cluster non vide
                     for (int l = 0; l < croyance[cluster[i].get(j)].length; l++) {
                         valCluster[i][l] += croyance[cluster[i].get(j)][l];
-
                     }
                 }
             }
         }
 
+        // Initialisation de la liste des indices de force de croyance
         int[] indexList = new int[cluster.length];
         for (int i = 0; i < indexList.length; i++) {
             indexList[i] = -1;
         }
+        
+        // On indice une liste sur la croyance la plus forte
         for (int i = 0; i < valCluster.length; i++) {
             int maxIndex = -1;
             double max = Double.NEGATIVE_INFINITY;
@@ -529,8 +554,12 @@ public class Main {
             }
         }
 
+        // Pour chaque cluster
         for (int i = 0; i < cluster.length; i++) {
+            // Si le cluster n'est pas vide
             if (!cluster[i].isEmpty()) {
+                // On calcule la moyenne des clusters 
+                // en fonction de l'indice de la croyance la plus forte
                 for (int j = 0; j < cluster[i].size(); j++) {
                     sommeMoyValCluster[i] += croyance[cluster[i].get(j)][indexList[i]];
                 }
@@ -539,11 +568,14 @@ public class Main {
 
         System.out.println("");
         // On ne garde que trois cluster au max à l'affichage
+        // Car il n'y aura jamais plus de trois cluster utilisé
         double tailleCluster = Math.min(3, cluster.length);
         // Afficher les clusters, leur valeurs et leur entropie
         for (int i = 0; i < tailleCluster; i++) {
             sommeMoyValCluster[i] = sommeMoyValCluster[i] / cluster[i].size();
-            if (!cluster[i].isEmpty()) {//indexList[i] != -1
+            // On affiche les clusters et leurs valeurs 
+            // si ils ne sont pas vide
+            if (!cluster[i].isEmpty()) {
                 System.out.println(cluster[i] + " cluster de croyance " + listDeCroyance[indexList[i]] + " de valeur moyenne "
                         + sommeMoyValCluster[i] + " et d'entropie de shannon de valeur " + resShannon[indexList[i]]);
             } else {
@@ -682,8 +714,9 @@ public class Main {
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
         // Couleur
-        affichage(listOfAgent20, listOfFeatures20, listOfValue20);
-        affichage(listOfAgent21, listOfFeatures21, listOfValue21);
+//        affichage(listOfAgent20, listOfFeatures20, listOfValue20);
+//        affichage(listOfAgent21, listOfFeatures21, listOfValue21);
+        affichage(listOfAgent22, listOfFeatures22, listOfValue22);
         // Extreme
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 //        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
