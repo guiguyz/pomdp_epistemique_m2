@@ -1,7 +1,8 @@
 package src;
 
-
 import java.io.IOException;
+import static java.lang.Double.max;
+import static java.lang.Double.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,9 +27,13 @@ public class Main {
     static double[][] listOfValue12 = {{0.8, 0.2}, {0.7, 0.3}, {0.95, 0.05}, {0.85, 0.15}};
     static double[][] listOfValue13 = {{0.98, 0.02}, {0.97, 0.03}, {0.99, 0.01}, {0.96, 0.04}};
 
-    static String[] listOfAgent2 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
-    static String[] listOfFeatures2 = {"Rouge", "Vert", "Bleu", "Blanc"};
-    static double[][] listOfValue2 = {{0.5, 0.1, 0.3, 0.1}, {0.05, 0.5, 0.05, 0.4}, {0.1, 0.1, 0.5, 0.3}, {0.04, 0.01, 0.05, 0.95}, {0.1, 0.1, 0.1, 0.7}};
+    static String[] listOfAgent20 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
+    static String[] listOfFeatures20 = {"Rouge", "Vert", "Bleu", "Blanc"};
+    static double[][] listOfValue20 = {{0.5, 0.1, 0.3, 0.1}, {0.05, 0.5, 0.05, 0.4}, {0.1, 0.1, 0.5, 0.3}, {0.04, 0.01, 0.05, 0.95}, {0.1, 0.1, 0.1, 0.7}};
+
+    static String[] listOfAgent21 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
+    static String[] listOfFeatures21 = {"Rouge", "Vert", "Bleu", "Blanc"};
+    static double[][] listOfValue21 = {{0.13, 0.01, 0.01, 0.85}, {0.01, 0.01, 0.03, 0.95}, {0.01, 0, 0, 0.99}, {0.04, 0, 0, 0.96}, {0.01, 0.01, 0.01, 0.97}};
 
     static String[] listOfAgent3 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent6"};
     static String[] listOfFeatures3 = {"C1", "C2", "C3"};
@@ -62,8 +67,16 @@ public class Main {
     static String[] listOfFeatures73 = {"Porte_ouverte", "Porte_fermée"};
     static double[][] listOfValue73 = {{0.99, 0.01}, {0.97, 0.03}, {0.95, 0.05}, {0.89, 0.11}};
 
+    static String[] listOfAgent8 = {"Robot0", "Robot1"};
+    static String[] listOfFeatures8 = {"C1", "C2"};
+    static double[][] listOfValue8 = {{0.5, 0.5}, {0.5, 0.5}};
+
+    static String[] listOfAgent9 = {"Robot0", "Robot1"};
+    static String[] listOfFeatures9 = {"C1", "C2"};
+    static double[][] listOfValue9 = {{0, 1}, {1, 0}};
+
     /**
-	 * Coefficient de Bhattacharyya
+     * Coefficient de Bhattacharyya
      *
      * @param p
      * @param q
@@ -78,7 +91,7 @@ public class Main {
     }
 
     /**
-	 * Distance de Battacharya
+     * Distance de Battacharya
      *
      * @param p
      * @param q
@@ -89,7 +102,7 @@ public class Main {
     }
 
     /**
-	 * Distance de Hellinger
+     * Distance de Hellinger
      *
      * @param p
      * @param q
@@ -100,7 +113,7 @@ public class Main {
     }
 
     /**
-	 * Entropie de shannon
+     * Entropie de shannon
      *
      * @param p
      * @return
@@ -115,8 +128,22 @@ public class Main {
         return sum;
     }
 
+    
     /**
-	 * Divergence de Kullbak-Leibler
+     * Entropie de shannon
+     *
+     * @param p
+     * @return
+     */
+    public static double croyanceMoyenne(double[] p) {
+        double sum = 0;
+        for (int i = 0; i < p.length; i++) {
+                sum += p[i];
+        }
+        return sum;
+    }
+    /**
+     * Divergence de Kullbak-Leibler
      *
      * @param p
      * @param q
@@ -133,7 +160,7 @@ public class Main {
     }
 
     /**
-	 * Distance de Itakura-Saito
+     * Distance de Itakura-Saito
      *
      * @param p
      * @param q
@@ -150,7 +177,7 @@ public class Main {
     }
 
     /**
-	 * Distance de Mahalanobis
+     * Distance de Mahalanobis
      *
      * @param p
      * @param q
@@ -169,7 +196,7 @@ public class Main {
     }
 
     /**
-	 * Calcule les matrices de distances en fonction du parametre typeDistance
+     * Calcule les matrices de distances en fonction du parametre typeDistance
      *
      * @param liste
      * @param typeDistance
@@ -203,7 +230,7 @@ public class Main {
     }
 
     /**
-	 * Retourne la map de tout les agents j qui sont en max avec les agents i
+     * Retourne la map de tout les agents j qui sont en max avec les agents i
      *
      * @param v
      * @param a
@@ -229,7 +256,7 @@ public class Main {
     }
 
     /**
-	 * Retourne la map de tout les agents j qui sont en min avec les agents i
+     * Retourne la map de tout les agents j qui sont en min avec les agents i
      *
      * @param v
      * @param a
@@ -255,7 +282,7 @@ public class Main {
     }
 
     /**
-	 * Retourne l'agent j qui est en min avec un agent i
+     * Retourne l'agent j qui est en min avec un agent i
      *
      * @param v
      * @param a
@@ -280,15 +307,194 @@ public class Main {
     }
 
     /**
-     * Mettre le nom de la croyance correspondant au cluster
-	 * Indiquer la valeur moyenne correspondant au cluster
-	 * Calculer et indiqué l'entropie de shannon de la croyance correspondant au cluster
-	 *
+     * Création des map d'agent en max et en min
+     *
+     * @param mat
+     */
+    public static void minMaxAgentsCroyance(double[][] mat) {
+        int nbAgent = mat.length;
+        for (int i = 0; i < nbAgent; i++) {
+            mapAgentsMax.put(i, getMax(mat[i], i));
+            mapAgentsMin.put(i, getMin(mat[i], i));
+        }
+    }
+
+    /**
+     * Création des clusters
+     *
+     * @param matx
+     * @param croyance
+     * @param listDeCroyance
+     */
+    public static void creationCluster(double[][] matx, double[][] croyance, String[] listDeCroyance) {
+
+        minMaxAgentsCroyance(matx);
+
+        int nbAgent = matx[0].length;
+        int nbCroyance = croyance[0].length;
+        double max = Double.MIN_VALUE;
+        double tempMax = 0;
+        double min = Double.MAX_VALUE;
+        double tempMin = 0;
+        int agent1min = 0;
+        int agent2min = 0;
+        int agent1max = 0;
+        int agent2max = 0;
+        boolean seuilAtteint = false;
+
+        // On transpose la matrice des croyances
+        // pour que les croyances soit sur les lignes
+        // afin de pouvoir calculer leur entropie
+        double[][] resSha = new double[croyance[0].length][croyance.length];
+        for (int i = 0; i < croyance.length; i++) {
+            for (int j = 0; j < croyance[i].length; j++) {
+                resSha[j][i] = croyance[i][j];
+            }
+        }
+
+        System.out.println("");
+        double[] sommeMoyVal = new double[resSha.length];
+        double[] resShannon = new double[resSha.length];
+        // Pour chaque croyance on calcule son entropie
+        for (int i = 0; i < resSha.length; i++) {
+            resShannon[i] = entropieShannon(resSha[i]);
+            sommeMoyVal[i]= croyanceMoyenne(resSha[i]);
+            System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i]);
+        }
+
+        int[] agentClust = new int[nbAgent];
+        for (int i = 0; i < nbAgent; i++) {
+            agentClust[i] = i;
+        }
+
+
+        for (int i = 0; i < sommeMoyVal.length; i++) {
+            if(sommeMoyVal[i]/nbAgent>0.9){
+                seuilAtteint=true;
+            }
+        }
+        
+        List<Integer>[] cluster = new List[nbCroyance];
+        for (int i = 0; i < nbCroyance; i++) {
+            cluster[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < matx.length; i++) {
+            for (int j = 0; j < matx[i].length; j++) {
+
+                if (i != j) {
+                    tempMin = matx[i][j];
+                    tempMax = matx[i][j];
+                    if (tempMin < min) {
+                        min = tempMin;
+                        agent1min = i;
+                        agent2min = j;
+                    }
+                    if (tempMax > max) {
+                        max = tempMax;
+                        agent1max = i;
+                        agent2max = j;
+                    }
+                }
+            }
+        }
+
+        if (seuilAtteint) {
+            for (int i = 0; i < nbAgent; i++) {
+                cluster[0].add(i);
+                agentClust[i] = -1;
+            }
+        } else {
+
+            cluster[0].add(agent1max);
+            cluster[1].add(agent2max);
+            agentClust[agent1max] = -1;
+            agentClust[agent2max] = -1;
+            if (agent1min == agent1max && !(cluster[1].contains(agent2min))) {
+                cluster[0].add(agent2min);
+                agentClust[agent2min] = -1;
+            } else if (agent2min == agent1max && !(cluster[1].contains(agent1min))) {
+                cluster[0].add(agent1min);
+                agentClust[agent1min] = -1;
+            } else if (agent1min == agent2max && !(cluster[0].contains(agent2min))) {
+                cluster[1].add(agent2min);
+                agentClust[agent2min] = -1;
+            } else if (agent2min == agent2max && !(cluster[0].contains(agent1min))) {
+                cluster[1].add(agent1min);
+                agentClust[agent1min] = -1;
+            } else {
+                if (nbCroyance > 2) {
+                    if (!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))) {
+                        cluster[2].add(agent2min);
+                        agentClust[agent2min] = -1;
+                    }
+                    if (!(cluster[0].contains(agent1min)) && !(cluster[1].contains(agent1min))) {
+                        cluster[2].add(agent1min);
+                        agentClust[agent1min] = -1;
+                    }
+                } else {
+                    if (matx[agent1min][agent1max] < matx[agent1min][agent2max] && !(cluster[1].contains(agent1min))) {
+                        cluster[0].add(agent1min);
+                        agentClust[agent1min] = -1;
+                    }
+                    if (matx[agent1min][agent1max] > matx[agent1min][agent2max] && !(cluster[0].contains(agent1min))) {
+                        cluster[1].add(agent1min);
+                        agentClust[agent1min] = -1;
+                    }
+                    if (matx[agent2min][agent1max] < matx[agent2min][agent2max] && !(cluster[1].contains(agent2min))) {
+                        cluster[0].add(agent2min);
+                        agentClust[agent2min] = -1;
+                    }
+                    if (matx[agent2min][agent1max] > matx[agent2min][agent2max] && !(cluster[0].contains(agent2min))) {
+                        cluster[1].add(agent2min);
+                        agentClust[agent2min] = -1;
+                    }
+                }
+            }
+        }
+
+        // Tant qu'il reste des agents non clusterisé
+        while (testAgentClust(agentClust)) {
+            // Pour chaque agents
+            for (int i = 0; i < agentClust.length; i++) {
+                // Si l'agent i n'est pas clusterisé
+                if (agentClust[i] != -1) {
+                    // On récupère l'agent j avec qui il est en min
+                    int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
+                    // Pour tout les groupes de cluster
+                    for (List<Integer> cluster1 : cluster) {
+                        // Pour chaque cluster
+                        for (int k = 0; k < cluster1.size(); k++) {
+                            // Si l'agent j est dans un cluster
+                            if (agentMinJ == cluster1.get(k)) {
+                                // On ajoute l'agent i avec lui
+                                cluster1.add(agentClust[i]);
+                                // On indique que l'agent i est désormais clusterisé 
+                                agentClust[i] = -1;
+                                // On stop la condition pour allez voir les autres agents
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        nomCluster(cluster, croyance, listDeCroyance, resShannon);
+
+    }
+
+    /**
+     * Mettre le nom de la croyance correspondant au cluster Indiquer la valeur
+     * moyenne correspondant au cluster Calculer et indiqué l'entropie de
+     * shannon de la croyance correspondant au cluster Afficher les clusters,
+     * leur valeurs et leur entropie
+     *
      * @param cluster
      * @param croyance
      * @param listDeCroyance
      */
-    public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance) {
+    public static void nomCluster(List<Integer>[] cluster, double[][] croyance, String[] listDeCroyance, double[] resShannon) {
 
         double[][] valCluster = new double[cluster.length][croyance[0].length];
 
@@ -331,24 +537,13 @@ public class Main {
             }
         }
 
-        double[][] resSha = new double[croyance[0].length][croyance.length];
-        for (int i = 0; i < croyance.length; i++) {
-            for (int j = 0; j < croyance[i].length; j++) {
-                resSha[j][i] = croyance[i][j];
-            }
-        }
-
         System.out.println("");
-        double[] resShannon = new double[croyance.length];
-        for (int i = 0; i < resSha.length; i++) {
-            resShannon[i] = entropieShannon(resSha[i]);
-            System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i]);
-        }
-
-        System.out.println("");
-        for (int i = 0; i < cluster.length; i++) {
+        // On ne garde que trois cluster au max à l'affichage
+        double tailleCluster = Math.min(3, cluster.length);
+        // Afficher les clusters, leur valeurs et leur entropie
+        for (int i = 0; i < tailleCluster; i++) {
             sommeMoyValCluster[i] = sommeMoyValCluster[i] / cluster[i].size();
-            if (indexList[i] != -1) {
+            if (!cluster[i].isEmpty()) {//indexList[i] != -1
                 System.out.println(cluster[i] + " cluster de croyance " + listDeCroyance[indexList[i]] + " de valeur moyenne "
                         + sommeMoyValCluster[i] + " et d'entropie de shannon de valeur " + resShannon[indexList[i]]);
             } else {
@@ -356,149 +551,6 @@ public class Main {
             }
         }
         System.out.println("");
-    }
-
-    /**
-     * Création des map d'agent en max et en min
-	 *
-     * @param mat
-     */
-    public static void minMaxAgentsCroyance(double[][] mat) {
-        int nbAgent = mat.length;
-        for (int i = 0; i < nbAgent; i++) {
-            mapAgentsMax.put(i, getMax(mat[i], i));
-            mapAgentsMin.put(i, getMin(mat[i], i));
-        }
-    }
-
-
-    /**
-     * Création des clusters
-	 *
-     * @param matx
-     * @param croyance
-     * @param listDeCroyance
-     */
-    public static void creationCluster(double[][] matx, double[][] croyance, String[] listDeCroyance) {
-
-        minMaxAgentsCroyance(matx);
-
-        int nbAgent = matx[0].length;
-        int nbCroyance = croyance[0].length;
-        double max = Double.MIN_VALUE;
-        double tempMax = 0;
-        double min = Double.MAX_VALUE;
-        double tempMin = 0;
-        int agent1min = 0;
-        int agent2min = 0;
-        int agent1max = 0;
-        int agent2max = 0;
-
-        int[] agentClust = new int[nbAgent];
-        for (int i = 0; i < nbAgent; i++) {
-            agentClust[i] = i;
-        }
-
-        List<Integer>[] cluster = new List[nbCroyance];
-        for (int i = 0; i < nbCroyance; i++) {
-            cluster[i] = new ArrayList<>();
-        }
-
-        for (int i = 0; i < matx.length; i++) {
-            for (int j = 0; j < matx[i].length; j++) {
-
-                if (i != j) {
-                    tempMin = matx[i][j];
-                    tempMax = matx[i][j];
-                    if (tempMin < min) {
-                        min = tempMin;
-                        agent1min = i;
-                        agent2min = j;
-                    }
-                    if (tempMax > max) {
-                        max = tempMax;
-                        agent1max = i;
-                        agent2max = j;
-                    }
-                }
-            }
-        }
-
-        cluster[0].add(agent1max);
-        cluster[1].add(agent2max);
-        agentClust[agent1max] = -1;
-        agentClust[agent2max] = -1;
-        if (agent1min == agent1max && !(cluster[1].contains(agent2min))) {
-            cluster[0].add(agent2min);
-            agentClust[agent2min] = -1;
-        } else if (agent2min == agent1max && !(cluster[1].contains(agent1min))) {
-            cluster[0].add(agent1min);
-            agentClust[agent1min] = -1;
-        } else if (agent1min == agent2max && !(cluster[0].contains(agent2min))) {
-            cluster[1].add(agent2min);
-            agentClust[agent2min] = -1;
-        } else if (agent2min == agent2max && !(cluster[0].contains(agent1min))) {
-            cluster[1].add(agent1min);
-            agentClust[agent1min] = -1;
-        } else {
-            if (nbCroyance > 2) {
-                if (!(cluster[0].contains(agent2min)) && !(cluster[1].contains(agent2min))) {
-                    cluster[2].add(agent2min);
-                    agentClust[agent2min] = -1;
-                }
-                if (!(cluster[0].contains(agent1min)) && !(cluster[1].contains(agent1min))) {
-                    cluster[2].add(agent1min);
-                    agentClust[agent1min] = -1;
-                }
-            } else {
-                if (matx[agent1min][agent1max] < matx[agent1min][agent2max] && !(cluster[1].contains(agent1min))) {
-                    cluster[0].add(agent1min);
-                    agentClust[agent1min] = -1;
-                }
-                if (matx[agent1min][agent1max] > matx[agent1min][agent2max] && !(cluster[0].contains(agent1min))) {
-                    cluster[1].add(agent1min);
-                    agentClust[agent1min] = -1;
-                }
-                if (matx[agent2min][agent1max] < matx[agent2min][agent2max] && !(cluster[1].contains(agent2min))) {
-                    cluster[0].add(agent2min);
-                    agentClust[agent2min] = -1;
-                }
-                if (matx[agent2min][agent1max] > matx[agent2min][agent2max] && !(cluster[0].contains(agent2min))) {
-                    cluster[1].add(agent2min);
-                    agentClust[agent2min] = -1;
-                }
-            }
-        }
-
-		// Tant qu'il reste des agents non clusterisé
-        while (testAgentClust(agentClust)) {
-			// Pour chaque agents
-            for (int i = 0; i < agentClust.length; i++) {
-				// Si l'agent i n'est pas clusterisé
-                if (agentClust[i] != -1) {
-					// On récupère l'agent j avec qui il est en min
-                    int agentMinJ = getMinJ(matx[agentClust[i]], agentClust[i]);
-					// Pour tout les groupes de cluster
-                    for (List<Integer> cluster1 : cluster) {
-						// Pour chaque cluster
-                        for (int k = 0; k < cluster1.size(); k++) {
-							// SI l'agent j est dans un cluster
-                            if (agentMinJ == cluster1.get(k)) {
-								// On ajoute l'agent i avec lui
-                                cluster1.add(agentClust[i]);
-								// On indique que l'agent i est désormais clusterisé 
-                                agentClust[i] = -1;
-								// On stop la condition pour allez voir les autres agents
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        nomCluster(cluster, croyance, listDeCroyance);
-
     }
 
     /**
@@ -517,7 +569,7 @@ public class Main {
     }
 
     /**
-	 * Affichage des résultats
+     * Affichage des résultats
      *
      * @param listAgent
      * @param listFeatures
@@ -585,14 +637,14 @@ public class Main {
 
         System.out.println("");
         double resI[][] = matriceDistanceAgents(listValues, "I");
-        System.out.println("Matrice de distance de Itakuro-Saito " + Arrays.toString(listFeatures) + " :");
+        System.out.println("Matrice de distance de Itakura-Saito " + Arrays.toString(listFeatures) + " :");
         System.out.println(Arrays.toString(listAgent));
         for (double[] agent : resI) {
             System.out.println(Arrays.toString(agent));
         }
 
         System.out.println("");
-        System.out.println("Cluster de distance de Itakuro-Saito : ");
+        System.out.println("Cluster de distance de Itakura-Saito : ");
         creationCluster(resI, listValues, listFeatures);
         System.out.println("Liste max ");
         System.out.println(mapAgentsMax.entrySet());
@@ -625,22 +677,27 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
+        // Civile
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue11);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue12);
 //        affichage(listOfAgent1, listOfFeatures1, listOfValue13);
-//        affichage(listOfAgent2, listOfFeatures2, listOfValue2);
+        // Couleur
+        affichage(listOfAgent20, listOfFeatures20, listOfValue20);
+        affichage(listOfAgent21, listOfFeatures21, listOfValue21);
+        // Extreme
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 //        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
 //        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
 //        affichage(listOfAgent6, listOfFeatures6, listOfValue6);
-
-
+//        affichage(listOfAgent8, listOfFeatures8, listOfValue8);
+//        affichage(listOfAgent9, listOfFeatures9, listOfValue9);
+        // Robots
 //        affichage(listOfAgent70, listOfFeatures70, listOfValue70);
-        affichage(listOfAgent71, listOfFeatures71, listOfValue71);
+//        affichage(listOfAgent71, listOfFeatures71, listOfValue71);
 //        affichage(listOfAgent72, listOfFeatures72, listOfValue72);
 //        affichage(listOfAgent73, listOfFeatures73, listOfValue73);
-
-//        GenereAlea genereAlea = new GenereAlea(5, 2);
+        // Aleatoire
+//        GenereAlea genereAlea = new GenereAlea(3, 5000);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
