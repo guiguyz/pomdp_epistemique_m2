@@ -32,7 +32,7 @@ public class Main {
     static String[] listOfAgent21 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4"};
     static String[] listOfFeatures21 = {"Rouge", "Vert", "Bleu", "Blanc"};
     static double[][] listOfValue21 = {{0.13, 0.01, 0.01, 0.85}, {0.01, 0.01, 0.03, 0.95}, {0.01, 0, 0, 0.99}, {0.04, 0, 0, 0.96}, {0.01, 0.01, 0.01, 0.97}};
-    
+
     static String[] listOfAgent22 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9"};
     static String[] listOfFeatures22 = {"Rouge", "Vert", "Bleu", "Blanc"};
     static double[][] listOfValue22 = {{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
@@ -345,6 +345,9 @@ public class Main {
         int agent2min = 0;
         int agent1max = 0;
         int agent2max = 0;
+        boolean[] seuilSha = new boolean[nbCroyance];
+        boolean seuilShaAtteint = false;
+        boolean seuilVal = false;
         boolean seuilAtteint = false;
 
         // On transpose la matrice des croyances
@@ -366,11 +369,36 @@ public class Main {
             // Pour chaque croyance on calcule sa valeur moyenne
             sommeMoyVal[i] = croyanceMoyenne(resSha[i]);
             sommeMoyVal[i] /= nbAgent;
-            // On teste si le seuil d'une croyance est atteint
-            if (sommeMoyVal[i] > 0.9) {
-                seuilAtteint = true;
-            }
             System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i] + " et de valeur moyenne " + sommeMoyVal[i]);
+        }
+        
+        
+
+        for (int i = 0; i < resShannon.length; i++) {
+            if (resShannon[i] < 0.6) {
+                seuilSha[i] = true;
+            }
+            seuilSha[i] = false;
+        }
+
+        for (int i = 0; i < sommeMoyVal.length; i++) {
+            if (sommeMoyVal[i] > 0.9) {
+                seuilVal = true;
+            }
+        }
+
+        
+        for (int i = 0; i < seuilSha.length; i++) {
+            if(seuilSha[i]==false){
+                seuilShaAtteint=false;
+            }else{
+                seuilShaAtteint=true;
+            }
+        }
+        
+        // On teste si le seuil d'une croyance est atteint
+        if (seuilShaAtteint && seuilVal) {
+            seuilAtteint = true;
         }
 
         // Pour tester si des agents sont dans des clusters
@@ -410,8 +438,9 @@ public class Main {
         // tous les agents sont dans le même cluster
         if (seuilAtteint) {
             for (int i = 0; i < nbAgent; i++) {
+                // On ajoute l'agent i dans le cluster 
                 cluster[0].add(i);
-                // On indique que les agents i sont dans un cluster
+                // On indique que l'agents i est dans le cluster
                 agentClust[i] = -1;
             }
         } else {
@@ -519,7 +548,6 @@ public class Main {
 
         double[] sommeMoyValCluster = new double[croyance[0].length];
 
-        
         // Pour chaque cluster
         for (int i = 0; i < cluster.length; i++) {
             if (!cluster[i].isEmpty()) {
@@ -538,7 +566,7 @@ public class Main {
         for (int i = 0; i < indexList.length; i++) {
             indexList[i] = -1;
         }
-        
+
         // On indice une liste sur la croyance la plus forte
         for (int i = 0; i < valCluster.length; i++) {
             int maxIndex = -1;
