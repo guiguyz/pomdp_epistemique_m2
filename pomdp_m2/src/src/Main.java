@@ -36,7 +36,22 @@ public class Main {
     static String[] listOfAgent22 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9"};
     static String[] listOfFeatures22 = {"Rouge", "Vert", "Bleu", "Blanc"};
     static double[][] listOfValue22 = {{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
-    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.4, 0, 0, 0.6}};
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.89, 0, 0, 0.11}};
+
+    static String[] listOfAgent23 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9"};
+    static String[] listOfFeatures23 = {"Rouge", "Vert", "Bleu", "Blanc"};
+    static double[][] listOfValue23 = {{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.9, 0, 0, 0.1}};
+    
+    static String[] listOfAgent24 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9",
+    "Agent10", "Agent11", "Agent12", "Agent13", "Agent14", "Agent15", "Agent15", "Agent17", "Agent18", "Agent19","Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent5", "Agent7", "Agent8", "Agent9",
+    "Agent10", "Agent11", "Agent12", "Agent13", "Agent14", "Agent15", "Agent15", "Agent17", "Agent18", "Agent19"};
+    static String[] listOfFeatures24 = {"Rouge", "Vert", "Bleu", "Blanc"};
+    static double[][] listOfValue24 = {{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.9, 0, 0, 0.1},{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.9, 0, 0, 0.1},{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.9, 0, 0, 0.1},{0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01},
+    {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}, {0.99, 0, 0, 0.01}};
 
     static String[] listOfAgent3 = {"Agent0", "Agent1", "Agent2", "Agent3", "Agent4", "Agent5", "Agent6"};
     static String[] listOfFeatures3 = {"C1", "C2", "C3"};
@@ -69,6 +84,14 @@ public class Main {
     static String[] listOfAgent73 = {"Robot0", "Robot1", "Robot2", "Robot3"};
     static String[] listOfFeatures73 = {"Porte_ouverte", "Porte_fermée"};
     static double[][] listOfValue73 = {{0.99, 0.01}, {0.97, 0.03}, {0.95, 0.05}, {0.89, 0.11}};
+
+    static String[] listOfAgent74 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures74 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue74 = {{0.9, 0.1}, {0.75, 0.25}, {0.25, 0.75}, {0.7, 0.3}};
+    
+    static String[] listOfAgent75 = {"Robot0", "Robot1", "Robot2", "Robot3"};
+    static String[] listOfFeatures75 = {"Porte_ouverte", "Porte_fermée"};
+    static double[][] listOfValue75 = {{0.6, 0.4}, {0.4, 0.6}, {0.6, 0.4}, {0.4, 0.6}};
 
     static String[] listOfAgent8 = {"Robot0", "Robot1"};
     static String[] listOfFeatures8 = {"C1", "C2"};
@@ -371,31 +394,25 @@ public class Main {
             sommeMoyVal[i] /= nbAgent;
             System.out.println("Croyance " + listDeCroyance[i] + " d'entropie " + resShannon[i] + " et de valeur moyenne " + sommeMoyVal[i]);
         }
-        
-        
 
+        // On teste si toutes les croyances ont
+        // une entropie inférieur à 0.65
         for (int i = 0; i < resShannon.length; i++) {
-            if (resShannon[i] < 0.6) {
-                seuilSha[i] = true;
-            }
-            seuilSha[i] = false;
+            seuilSha[i] = resShannon[i] < 0.65;
         }
 
+        // On teste si une croyance à une valeur moyenne
+        // supérieur à 0.9
         for (int i = 0; i < sommeMoyVal.length; i++) {
             if (sommeMoyVal[i] > 0.9) {
                 seuilVal = true;
             }
         }
 
-        
         for (int i = 0; i < seuilSha.length; i++) {
-            if(seuilSha[i]==false){
-                seuilShaAtteint=false;
-            }else{
-                seuilShaAtteint=true;
-            }
+            seuilShaAtteint = seuilSha[i] != false;
         }
-        
+
         // On teste si le seuil d'une croyance est atteint
         if (seuilShaAtteint && seuilVal) {
             seuilAtteint = true;
@@ -744,8 +761,10 @@ public class Main {
         // Couleur
 //        affichage(listOfAgent20, listOfFeatures20, listOfValue20);
 //        affichage(listOfAgent21, listOfFeatures21, listOfValue21);
-        affichage(listOfAgent22, listOfFeatures22, listOfValue22);
-        // Extreme
+//        affichage(listOfAgent22, listOfFeatures22, listOfValue22);
+//        affichage(listOfAgent23, listOfFeatures23, listOfValue23);
+//        affichage(listOfAgent24, listOfFeatures24, listOfValue24);
+//        // Extreme
 //        affichage(listOfAgent3, listOfFeatures3, listOfValue3);
 //        affichage(listOfAgent4, listOfFeatures4, listOfValue4);
 //        affichage(listOfAgent5, listOfFeatures5, listOfValue5);
@@ -757,8 +776,10 @@ public class Main {
 //        affichage(listOfAgent71, listOfFeatures71, listOfValue71);
 //        affichage(listOfAgent72, listOfFeatures72, listOfValue72);
 //        affichage(listOfAgent73, listOfFeatures73, listOfValue73);
+//        affichage(listOfAgent74, listOfFeatures74, listOfValue74);
+//        affichage(listOfAgent75, listOfFeatures75, listOfValue75);
         // Aleatoire
-//        GenereAlea genereAlea = new GenereAlea(3, 5000);
+//        GenereAlea genereAlea = new GenereAlea(3, 100);
 //        affichage(genereAlea.listOfAgent, genereAlea.listDeCroyance, genereAlea.listValeur);
     }
 }
